@@ -26,10 +26,16 @@ CONFIG += c++17
 
 SOURCES += \
         main.cpp \
-        window.cpp
+        window.cpp \
+    data/vertex.cpp \
+    data/edge.cpp \
+    data/graph.cpp
 
 HEADERS += \
-        window.h
+        window.h \
+    data/vertex.h \
+    data/edge.h \
+    data/graph.h
 
 FORMS += \
         window.ui
