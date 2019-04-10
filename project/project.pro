@@ -29,13 +29,17 @@ SOURCES += \
         window.cpp \
     data/vertex.cpp \
     data/edge.cpp \
-    data/graph.cpp
+    data/graph.cpp \
+    data/list.cpp \
+    data/node.cpp
 
 HEADERS += \
         window.h \
     data/vertex.h \
     data/edge.h \
-    data/graph.h
+    data/graph.h \
+    data/list.h \
+    data/node.h
 
 FORMS += \
         window.ui
