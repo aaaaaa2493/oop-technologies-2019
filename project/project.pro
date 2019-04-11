@@ -31,7 +31,10 @@ SOURCES += \
     data/edge.cpp \
     data/graph.cpp \
     data/list.cpp \
-    data/node.cpp
+    data/node.cpp \
+    data/queue.cpp \
+    data/stack.cpp \
+    data/pair.cpp
 
 HEADERS += \
         window.h \
@@ -39,7 +42,10 @@ HEADERS += \
     data/edge.h \
     data/graph.h \
     data/list.h \
-    data/node.h
+    data/node.h \
+    data/queue.h \
+    data/stack.h \
+    data/pair.h
 
 FORMS += \
         window.ui

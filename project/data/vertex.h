@@ -6,6 +6,8 @@ class Vertex
 {
 public:
     Vertex();
+    bool isVisited = false;
+
 };
 
 #endif // VERTEX_H

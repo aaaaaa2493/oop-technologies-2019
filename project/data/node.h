@@ -6,7 +6,7 @@ class Node {
 public:
     Node(T *elem) : value(elem), next(0), prev(0) {}
     ~Node() {
-        delete value;
+        // delete value;
     }
 
     T *value;

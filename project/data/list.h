@@ -64,7 +64,7 @@ public:
 
     List *deleteBefore() {
         if (curr == 0) {
-            return;
+            return this;
         }
         else if (curr == start) {
             curr = curr->next;
@@ -88,7 +88,7 @@ public:
 
     List *deleteAfter() {
         if (curr == 0) {
-            return;
+            return this;
         }
         else if (curr == end) {
             curr = curr->prev;
@@ -106,6 +106,29 @@ public:
             curr->next = node->next;
             node->next->prev = curr;
             delete node;
+        }
+        return this;
+    }
+
+    List *deleteCurr() {
+        if (curr == 0) {
+            return this;
+        }
+        if (isStart() && isEnd()) {
+            delete curr;
+            curr = start = end = 0;
+        }
+        else if (isStart()) {
+            next();
+            deleteBefore();
+        }
+        else if (isEnd()) {
+            prev();
+            deleteAfter();
+        }
+        else {
+            prev();
+            deleteAfter();
         }
         return this;
     }
