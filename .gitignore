@@ -1,2 +1,9 @@
 build-*
 *.user
+*/graph.dot
+*/graph.svg
+project/debug/*
+*.Debug
+*.Release
+project/Makefile
+project/.qmake.stash

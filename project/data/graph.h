@@ -30,11 +30,39 @@ public:
         delete edges;
     }
 
+    List<Vertex> *getVertices() {
+        return vertices;
+    }
+
+    List<Edge> *getEdges() {
+        return edges;
+    }
+
+    Vertex *findVertex(QString name) {
+        vertices->toStart();
+        bool isEnd = false;
+        while (!isEnd && !vertices->isEmpty()) {
+
+            if (vertices->get()->displayName == name) {
+                return vertices->get();
+            }
+
+            isEnd = vertices->isEnd();
+            vertices->next();
+        }
+
+        return nullptr;
+    }
+
     bool containsVertex(Vertex *v) {
         return vertices->find(v);
     }
 
     bool containsEdge(Edge *e) {
+        bool isEmpty = edges->isEmpty();
+        if (isEmpty) {
+            return false;
+        }
         Vertex *from = e->getFrom();
         Vertex *to = e->getTo();
         bool isEnd = false;
@@ -42,12 +70,12 @@ public:
         while (!isEnd) {
             Edge *curr = edges->get();
             if (curr->getFrom() == from && curr->getTo() == to) {
-                return false;
+                return true;
             }
             isEnd = edges->isEnd();
             edges->next();
         }
-        return true;
+        return false;
     }
 
     void addVertex(Vertex *v) {

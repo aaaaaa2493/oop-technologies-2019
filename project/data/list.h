@@ -13,7 +13,7 @@ class List {
 public:
     T *value;
 
-    List(T *v = 0) : curr(0), start(0), end(0), value(v) {}
+    List(T *v = nullptr) : curr(nullptr), start(nullptr), end(nullptr), value(v) {}
     ~List() {
         curr = start;
         while (curr != end) {
@@ -21,12 +21,12 @@ public:
             delete curr->prev;
         }
         delete curr;
-        curr = start = end = 0;
+        curr = start = end = nullptr;
     }
 
     List *addBefore(T *value) {
         Node<T> *node = new Node<T>(value);
-        if (curr == 0) {
+        if (curr == nullptr) {
             curr = start = end = node;
         }
         else if (curr == start) {
@@ -45,7 +45,7 @@ public:
 
     List *addAfter(T *value) {
         Node<T> *node = new Node<T>(value);
-        if (curr == 0) {
+        if (curr == nullptr) {
             curr = start = end = node;
         }
         else if (curr == end) {
@@ -63,17 +63,17 @@ public:
     }
 
     List *deleteBefore() {
-        if (curr == 0) {
+        if (curr == nullptr) {
             return this;
         }
         else if (curr == start) {
             curr = curr->next;
-            curr->prev = 0;
+            curr->prev = nullptr;
             delete start;
             start = curr;
         }
         else if(curr->prev == start){
-            curr->prev = 0;
+            curr->prev = nullptr;
             delete start;
             start = curr;
         }
@@ -87,18 +87,18 @@ public:
     }
 
     List *deleteAfter() {
-        if (curr == 0) {
+        if (curr == nullptr) {
             return this;
         }
         else if (curr == end) {
             curr = curr->prev;
             delete curr->next;
-            curr->next = 0;
+            curr->next = nullptr;
             end = curr;
         }
         else if (curr->next == end) {
             delete curr->next;
-            curr->next = 0;
+            curr->next = nullptr;
             end = curr;
         }
         else {
@@ -111,12 +111,12 @@ public:
     }
 
     List *deleteCurr() {
-        if (curr == 0) {
+        if (curr == nullptr) {
             return this;
         }
         if (isStart() && isEnd()) {
             delete curr;
-            curr = start = end = 0;
+            curr = start = end = nullptr;
         }
         else if (isStart()) {
             next();
@@ -164,7 +164,7 @@ public:
     }
 
     bool hasNext() {
-        return curr->next == 0;
+        return curr->next == nullptr;
     }
 
     bool isEnd() {
@@ -176,7 +176,7 @@ public:
     }
 
     bool isEmpty() {
-        return start == 0 && end == 0;
+        return start == nullptr && end == nullptr;
     }
 
     bool find(T *value) {
