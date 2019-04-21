@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui svg
+QT       += core gui svg sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 
 SOURCES += \
+    deletewindow.cpp \
+    graphdbhelper.cpp \
         main.cpp \
         window.cpp \
     data/vertex.cpp \
@@ -34,9 +36,12 @@ SOURCES += \
     data/node.cpp \
     data/queue.cpp \
     data/stack.cpp \
-    data/pair.cpp
+    data/pair.cpp \
+    windowadd.cpp
 
 HEADERS += \
+    deletewindow.h \
+    graphdbhelper.h \
         window.h \
     data/vertex.h \
     data/edge.h \
@@ -45,10 +50,13 @@ HEADERS += \
     data/node.h \
     data/queue.h \
     data/stack.h \
-    data/pair.h
+    data/pair.h \
+    windowadd.h
 
 FORMS += \
-        window.ui
+        deletewindow.ui \
+        window.ui \
+        windowadd.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
