@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QSvgWidget>
 #include "data/graph.h"
+#include "windowadd.h"
+#include "deletewindow.h"
 
 namespace Ui {
 class Window;
@@ -20,15 +22,22 @@ public:
 private:
     Ui::Window *ui;
 
+    DeleteWindow *win;
+    WindowAdd *window;
     Graph *graph;
     QSvgWidget *svgTree;
 
-
-public slots:
     void onGraphChanged(Graph *graph);
+public slots:   
+    void onVertexAdded(Vertex *v);
+    void onEdgeAdded(Edge *e);
+
+    void onVertexDeleted(Vertex *v);
+    void onEdgeDeleted(Edge *e);
 private slots:
     void on_addItem_clicked();
     void on_addEdge_clicked();
+    void on_Remove_clicked();
 };
 
 #endif // WINDOW_H
