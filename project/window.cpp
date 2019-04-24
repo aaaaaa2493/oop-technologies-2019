@@ -106,13 +106,13 @@ void Window::onEdgeAdded(Edge *e)
 
 void Window::onVertexDeleted(Vertex *v)
 {
-    graph->removeVertex(v);
+    graph->removeVertex(v->displayName);
     onGraphChanged(graph);
 }
 
 void Window::onEdgeDeleted(Edge *e)
 {
-    graph->removeEdge(e);
+    graph->removeEdge(e->getFrom()->displayName, e->getTo()->displayName);
     onGraphChanged(graph);
 }
 

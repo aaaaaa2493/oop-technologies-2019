@@ -113,6 +113,21 @@ public:
         throw;
     }
 
+    void removeEdge(QString from, QString to) {
+        bool isEnd = false;
+        edges->toStart();
+        while (!isEnd) {
+            Edge *curr = edges->get();
+            if (curr->getFrom()->displayName == from && curr->getTo()->displayName == to) {
+                edges->deleteCurr();
+                return;
+            }
+            isEnd = edges->isEnd();
+            edges->next();
+        }
+        throw;
+    }
+
     void removeVertex(Vertex *v) {
         if (!containsVertex(v)) {
             throw;
@@ -130,9 +145,37 @@ public:
         }
 
         vertices->toStart();
+        isEnd = false;
         while (!isEnd) {
             Vertex *curr = vertices->get();
             if (curr == v) {
+                vertices->deleteCurr();
+                return;
+            }
+            isEnd = vertices->isEnd();
+            vertices->next();
+        }
+        throw;
+    }
+
+    void removeVertex(QString v) {
+        bool isEnd = false;
+        edges->toStart();
+        while (!isEnd) {
+            Edge *curr = edges->get();
+            if (curr->getFrom()->displayName == v || curr->getTo()->displayName == v) {
+                edges->deleteCurr();
+                edges->prev();
+            }
+            isEnd = edges->isEnd();
+            edges->next();
+        }
+
+        vertices->toStart();
+        isEnd = false;
+        while (!isEnd) {
+            Vertex *curr = vertices->get();
+            if (curr->displayName == v) {
                 vertices->deleteCurr();
                 return;
             }
