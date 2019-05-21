@@ -13,13 +13,8 @@ class Graph
     List<Edge> *edges = new List<Edge>();
 
     void resetVertices() {
-        bool isEnd = false;
-        vertices->toStart();
-        while (!isEnd) {
-            Vertex *curr = vertices->get();
-            curr->isVisited = false;
-            isEnd = vertices->isEnd();
-            vertices->next();
+        for (Vertex *v : *vertices) {
+            v->isVisited = false;
         }
     }
 
@@ -39,18 +34,11 @@ public:
     }
 
     Vertex *findVertex(QString name) {
-        vertices->toStart();
-        bool isEnd = false;
-        while (!isEnd && !vertices->isEmpty()) {
-
-            if (vertices->get()->displayName == name) {
-                return vertices->get();
+        for (Vertex *v : *vertices) {
+            if (v->displayName == name) {
+                return v;
             }
-
-            isEnd = vertices->isEnd();
-            vertices->next();
         }
-
         return nullptr;
     }
 
@@ -65,16 +53,13 @@ public:
         }
         Vertex *from = e->getFrom();
         Vertex *to = e->getTo();
-        bool isEnd = false;
-        edges->toStart();
-        while (!isEnd) {
-            Edge *curr = edges->get();
-            if (curr->getFrom() == from && curr->getTo() == to) {
+
+        for (Edge *ed : *edges) {
+            if (ed->getFrom() == from && ed->getTo() == to) {
                 return true;
             }
-            isEnd = edges->isEnd();
-            edges->next();
         }
+
         return false;
     }
 

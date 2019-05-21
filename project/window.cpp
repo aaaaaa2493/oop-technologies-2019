@@ -60,23 +60,15 @@ void Window::onGraphChanged(Graph *graph)
         stream << "digraph {\n";
 
         List<Vertex> *vertices = graph->getVertices();
-        vertices->toStart();
-        bool isEnd = false;
-        while (!isEnd && !vertices->isEmpty()) {
-            stream << " \"" << vertices->get()->displayName << "\";\n";
-            isEnd = vertices->isEnd();
-            vertices->next();
+        for (Vertex *v : *vertices) {
+            stream << " \"" << v->displayName << "\";\n";
         }
 
         List<Edge> *edges = graph->getEdges();
-        edges->toStart();
-        isEnd = false;
-        while (!isEnd && !edges->isEmpty()) {
-            Vertex *from = edges->get()->getFrom();
-            Vertex *to = edges->get()->getTo();
+        for (Edge *e : *edges) {
+            Vertex *from = e->getFrom();
+            Vertex *to = e->getTo();
             stream << " \"" << from->displayName << "\" -> \"" << to->displayName << "\";\n";
-            isEnd = edges->isEnd();
-            edges->next();
         }
 
         stream << "}\n";
