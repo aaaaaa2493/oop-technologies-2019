@@ -7,30 +7,30 @@
 template<typename T>
 class List {
     Node<T> *curr;
-    Node<T> *start;
-    Node<T> *end;
+    Node<T> *first;
+    Node<T> *last;
 
 public:
     T *value;
 
-    List(T *v = nullptr) : curr(nullptr), start(nullptr), end(nullptr), value(v) {}
+    List(T *v = nullptr) : curr(nullptr), first(nullptr), last(nullptr), value(v) {}
     ~List() {
-        curr = start;
-        while (curr != end) {
+        curr = first;
+        while (curr != last) {
             curr = curr->next;
             delete curr->prev;
         }
         delete curr;
-        curr = start = end = nullptr;
+        curr = first = last = nullptr;
     }
 
     List *addBefore(T *value) {
         Node<T> *node = new Node<T>(value);
         if (curr == nullptr) {
-            curr = start = end = node;
+            curr = first = last = node;
         }
-        else if (curr == start) {
-            start = node;
+        else if (curr == first) {
+            first = node;
             node->next = curr;
             curr->prev = node;
         }
@@ -46,10 +46,10 @@ public:
     List *addAfter(T *value) {
         Node<T> *node = new Node<T>(value);
         if (curr == nullptr) {
-            curr = start = end = node;
+            curr = first = last = node;
         }
-        else if (curr == end) {
-            end = node;
+        else if (curr == last) {
+            last = node;
             node->prev = curr;
             curr->next = node;
         }
@@ -66,16 +66,16 @@ public:
         if (curr == nullptr) {
             return this;
         }
-        else if (curr == start) {
+        else if (curr == first) {
             curr = curr->next;
             curr->prev = nullptr;
-            delete start;
-            start = curr;
+            delete first;
+            first = curr;
         }
-        else if(curr->prev == start){
+        else if(curr->prev == first){
             curr->prev = nullptr;
-            delete start;
-            start = curr;
+            delete first;
+            first = curr;
         }
         else {
             Node<T> *node = curr->prev;
@@ -90,16 +90,16 @@ public:
         if (curr == nullptr) {
             return this;
         }
-        else if (curr == end) {
+        else if (curr == last) {
             curr = curr->prev;
             delete curr->next;
             curr->next = nullptr;
-            end = curr;
+            last = curr;
         }
-        else if (curr->next == end) {
+        else if (curr->next == last) {
             delete curr->next;
             curr->next = nullptr;
-            end = curr;
+            last = curr;
         }
         else {
             Node<T> *node = curr->next;
@@ -116,7 +116,7 @@ public:
         }
         if (isStart() && isEnd()) {
             delete curr;
-            curr = start = end = nullptr;
+            curr = first = last = nullptr;
         }
         else if (isStart()) {
             next();
@@ -134,18 +134,18 @@ public:
     }
 
     List *next() {
-        if (curr != end) {
+        if (curr != last) {
             curr = curr->next;
         }
         return this;
     }
 
     Node<T> *getStart() {
-        return start;
+        return first;
     }
 
     List *prev() {
-        if (curr != start) {
+        if (curr != first) {
             curr = curr->prev;
         }
         return this;
@@ -156,11 +156,11 @@ public:
     }
 
     void toStart() {
-        curr = start;
+        curr = first;
     }
 
     void toEnd() {
-        curr = end;
+        curr = last;
     }
 
     bool hasNext() {
@@ -168,15 +168,15 @@ public:
     }
 
     bool isEnd() {
-        return curr == end;
+        return curr == last;
     }
 
     bool isStart() {
-        return curr == start;
+        return curr == first;
     }
 
     bool isEmpty() {
-        return start == nullptr && end == nullptr;
+        return first == nullptr && last == nullptr;
     }
 
     bool find(T *value) {
@@ -184,7 +184,7 @@ public:
             return false;
         }
         toStart();
-        while (curr != end) {
+        while (curr != last) {
             if (curr->value == value) {
                 return true;
             }
