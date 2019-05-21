@@ -3,6 +3,9 @@
 
 #include "node.h"
 
+template<typename T>
+class ListIterator;
+
 
 template<typename T>
 class List {
@@ -198,6 +201,43 @@ public:
         }
     }
 
+    ListIterator<T> begin() {
+        return ListIterator<T>(first);
+    }
+
+    ListIterator<T> end() {
+        return ListIterator<T>(nullptr);
+    }
+
 };
 
+
+template<typename T>
+class ListIterator
+{
+public:
+    ListIterator(Node<T> *curr) {
+        this->curr = curr;
+    }
+
+    bool operator!=(ListIterator<T> &other)  {
+        return other.curr != curr;
+    }
+
+    bool operator==(ListIterator<T> &other)  {
+        return other.curr == curr;
+    }
+
+    T* operator*() {
+        return curr->value;
+    }
+
+    ListIterator<T>& operator++() {
+        curr = curr->next;
+        return *this;
+    }
+
+private:
+    Node<T> *curr;
+};
 #endif // LIST_H
