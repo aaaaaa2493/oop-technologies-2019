@@ -270,6 +270,9 @@ public:
             if (e->getTo()->displayName == final->displayName) {
                 e->getTo()->isVisited = true;
             }
+            if (e->getFrom()->displayName == final->displayName) {
+                e->getFrom()->isVisited = true;
+            }
         }
 
         bool is_end = false;
