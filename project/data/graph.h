@@ -88,7 +88,7 @@ public:
     void removeEdge(Edge *e) {
         Vertex *from = e->getFrom();
         Vertex *to = e->getTo();
-        bool isEnd = false;
+        bool isEnd = edges->isEmpty();
         edges->toStart();
         while (!isEnd) {
             Edge *curr = edges->get();
@@ -103,7 +103,7 @@ public:
     }
 
     void removeEdge(QString from, QString to) {
-        bool isEnd = false;
+        bool isEnd = edges->isEmpty();
         edges->toStart();
         while (!isEnd) {
             Edge *curr = edges->get();
@@ -121,7 +121,7 @@ public:
         if (!containsVertex(v)) {
             throw;
         }
-        bool isEnd = false;
+        bool isEnd = edges->isEmpty();
         edges->toStart();
         while (!isEnd) {
             Edge *curr = edges->get();
@@ -134,7 +134,7 @@ public:
         }
 
         vertices->toStart();
-        isEnd = false;
+        isEnd = vertices->isEmpty();
         while (!isEnd) {
             Vertex *curr = vertices->get();
             if (curr == v) {
@@ -148,7 +148,7 @@ public:
     }
 
     void removeVertex(QString v) {
-        bool isEnd = false;
+        bool isEnd = edges->isEmpty();
         edges->toStart();
         while (!isEnd) {
             Edge *curr = edges->get();
@@ -161,7 +161,7 @@ public:
         }
 
         vertices->toStart();
-        isEnd = false;
+        isEnd = vertices->isEmpty();
         while (!isEnd) {
             Vertex *curr = vertices->get();
             if (curr->displayName == v) {
@@ -189,7 +189,7 @@ public:
         while (!queue->isEmpty()) {
              Vertex *currVertex = queue->pop();
 
-             bool isEnd = false;
+             bool isEnd = edges->isEmpty();
              edges->toStart();
              while (!isEnd) {
                  Edge *currEdge = edges->get();
@@ -225,7 +225,7 @@ public:
 
             bool isDeeper = false;
 
-            bool isEnd = false;
+            bool isEnd = edges->isEmpty();
             edges->toStart();
             while (!isEnd) {
                 Edge *currEdge = edges->get();
