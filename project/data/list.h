@@ -27,6 +27,9 @@ public:
         curr = first = last = nullptr;
     }
 
+    // ... node1 -> curr -> node2 ...
+    // results in
+    // ... node1 -> NEW -> curr -> node2 ...
     List *addBefore(T *value) {
         Node<T> *node = new Node<T>(value);
         if (curr == nullptr) {
@@ -46,6 +49,9 @@ public:
         return this;
     }
 
+    // ... node1 -> curr -> node2 ...
+    // results in
+    // ... node1 -> curr -> NEW -> node2 ...
     List *addAfter(T *value) {
         Node<T> *node = new Node<T>(value);
         if (curr == nullptr) {

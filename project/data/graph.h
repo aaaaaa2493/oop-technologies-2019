@@ -16,6 +16,10 @@ class Graph
         for (Vertex *v : *vertices) {
             v->isVisited = false;
         }
+        for (Edge *e : *edges) {
+            e->getFrom()->isVisited = false;
+            e->getTo()->isVisited = false;
+        }
     }
 
 public:
@@ -251,13 +255,44 @@ public:
         return list;
     }
 
-    bool isCyclic() {
 
-        if (edges->isEmpty()) {
-            return false;
+    List<Vertex> *getLearningOrder(Vertex *finalTopic) {
+
+        resetVertices();
+        List<Vertex> *list = new List<Vertex>();
+
+        Vertex *final = findVertex(finalTopic->displayName);
+
+        list->addBefore(final);
+        final->isVisited = true;
+
+        for (Edge *e : *edges) {
+            if (e->getTo()->displayName == final->displayName) {
+                e->getTo()->isVisited = true;
+            }
         }
 
-        return false;
+        bool is_end = false;
+        while (!is_end) {
+            is_end = true;
+
+            for (Edge *e : *edges) {
+                if (e->getTo()->isVisited && !e->getFrom()->isVisited) {
+
+                    Vertex *curr = findVertex(e->getFrom()->displayName);
+                    list->addAfter(curr);
+
+                    e->getFrom()->isVisited = true;
+                    curr->isVisited = true;
+
+                    is_end = false;
+                }
+            }
+        }
+
+        resetVertices();
+
+        return
     }
 
 };
