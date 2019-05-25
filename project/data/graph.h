@@ -295,7 +295,7 @@ public:
 
         resetVertices();
 
-        return
+        return list;
     }
 
 };
