@@ -14,9 +14,8 @@ class List {
     Node<T> *last;
 
 public:
-    T *value;
 
-    List(T *v = nullptr) : curr(nullptr), first(nullptr), last(nullptr), value(v) {}
+    List(): curr(nullptr), first(nullptr), last(nullptr) { }
     ~List() {
         curr = first;
         while (curr != last) {
@@ -27,13 +26,24 @@ public:
         curr = first = last = nullptr;
     }
 
-    // ... node1 -> curr -> node2 ...
+    // APPROVED
+
+    // curr ...
     // results in
-    // ... node1 -> NEW -> curr -> node2 ...
+    // NEW -> curr ...
+
+    // ... node -> curr ...
+    // results in
+    // ... node -> NEW -> curr ...
+
     List *addBefore(T *value) {
         Node<T> *node = new Node<T>(value);
         if (curr == nullptr) {
             curr = first = last = node;
+        }
+        else if (first == last) {
+            delete curr;
+            curr = first = last = nullptr;
         }
         else if (curr == first) {
             first = node;
@@ -49,13 +59,24 @@ public:
         return this;
     }
 
-    // ... node1 -> curr -> node2 ...
+    // APPROVED
+
+    // ... curr
     // results in
-    // ... node1 -> curr -> NEW -> node2 ...
+    // ... curr -> NEW
+
+    // ... curr -> node ...
+    // results in
+    // ... curr -> NEW -> node ...
+
     List *addAfter(T *value) {
         Node<T> *node = new Node<T>(value);
         if (curr == nullptr) {
             curr = first = last = node;
+        }
+        else if (first == last) {
+            delete curr;
+            curr = first = last = nullptr;
         }
         else if (curr == last) {
             last = node;
@@ -64,12 +85,18 @@ public:
         }
         else {
             node->prev = curr;
-            node->next = curr->next->next;
+            node->next = curr->next;
             curr->next->prev = node;
             curr->next = node;
         }
         return this;
     }
+
+    // APPROVED
+
+    // ... node1 -> node2 -> curr ...
+    // results in
+    // ... node1 -> curr ...
 
     List *deleteBefore() {
         if (curr == nullptr) {
@@ -81,7 +108,7 @@ public:
             delete first;
             first = curr;
         }
-        else if(curr->prev == first){
+        else if (curr->prev == first) {
             curr->prev = nullptr;
             delete first;
             first = curr;
@@ -95,25 +122,31 @@ public:
         return this;
     }
 
+    // APPROVED
+
+    // ... curr -> node1 -> node2 ...
+    // results in
+    // ... curr -> node2 -> ...
+
     List *deleteAfter() {
         if (curr == nullptr) {
             return this;
         }
         else if (curr == last) {
             curr = curr->prev;
-            delete curr->next;
             curr->next = nullptr;
+            delete last;
             last = curr;
         }
         else if (curr->next == last) {
-            delete curr->next;
             curr->next = nullptr;
+            delete last;
             last = curr;
         }
         else {
             Node<T> *node = curr->next;
-            curr->next = node->next;
             node->next->prev = curr;
+            curr->next = node->next;
             delete node;
         }
         return this;
@@ -173,7 +206,7 @@ public:
     }
 
     bool hasNext() {
-        return curr->next == nullptr;
+        return curr->next != nullptr;
     }
 
     bool isEnd() {
