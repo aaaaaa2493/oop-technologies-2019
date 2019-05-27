@@ -41,10 +41,6 @@ public:
         if (curr == nullptr) {
             curr = first = last = node;
         }
-        else if (first == last) {
-            delete curr;
-            curr = first = last = nullptr;
-        }
         else if (curr == first) {
             first = node;
             node->next = curr;
@@ -74,10 +70,6 @@ public:
         if (curr == nullptr) {
             curr = first = last = node;
         }
-        else if (first == last) {
-            delete curr;
-            curr = first = last = nullptr;
-        }
         else if (curr == last) {
             last = node;
             node->prev = curr;
@@ -101,6 +93,10 @@ public:
     List *deleteBefore() {
         if (curr == nullptr) {
             return this;
+        }
+        else if (first == last) {
+            delete curr;
+            curr = first = last = nullptr;
         }
         else if (curr == first) {
             curr = curr->next;
@@ -131,6 +127,10 @@ public:
     List *deleteAfter() {
         if (curr == nullptr) {
             return this;
+        }
+        else if (first == last) {
+            delete curr;
+            curr = first = last = nullptr;
         }
         else if (curr == last) {
             curr = curr->prev;
