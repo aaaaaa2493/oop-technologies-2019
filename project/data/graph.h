@@ -49,7 +49,18 @@ public:
     }
 
     bool containsVertex(Vertex *v) {
-        return vertices->find(v);
+        bool isEmpty = vertices->isEmpty();
+        if (isEmpty) {
+            return false;
+        }
+
+        for (Vertex *curr : *vertices) {
+            if (curr->displayName == v->displayName) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     bool containsEdge(Edge *e) {
@@ -80,7 +91,11 @@ public:
 
     void addEdge(Edge *edge) {
         if (!containsEdge(edge)) {
-            edges->addAfter(edge);
+            edges->addAfter(new Edge(
+                findVertex(edge->getFrom()->displayName),
+                findVertex(edge->getTo()->displayName),
+                edge->graphName
+            ));
         }
         else {
             throw;
@@ -127,19 +142,28 @@ public:
         edges->toStart();
         while (!isEnd) {
             Edge *curr = edges->get();
-            if (curr->getFrom() == v || curr->getTo() == v) {
+            if (curr->getFrom()->displayName == v->displayName
+                    || curr->getTo()->displayName == v->displayName) {
                 edges->deleteCurr();
                 edges->prev();
             }
             isEnd = edges->isEnd();
             edges->next();
         }
+        if (!edges->isEmpty()) {
+            Edge *curr = edges->get();
+            if (curr->getFrom()->displayName == v->displayName
+                    || curr->getTo()->displayName == v->displayName) {
+                edges->deleteCurr();
+                edges->prev();
+            }
+        }
 
         vertices->toStart();
         isEnd = vertices->isEmpty();
         while (!isEnd) {
             Vertex *curr = vertices->get();
-            if (curr == v) {
+            if (curr->displayName == v->displayName) {
                 vertices->deleteCurr();
                 return;
             }
@@ -160,6 +184,14 @@ public:
             }
             isEnd = edges->isEnd();
             edges->next();
+        }
+        if (!edges->isEmpty()) {
+            Edge *curr = edges->get();
+            if (curr->getFrom()->displayName == v
+                    || curr->getTo()->displayName == v) {
+                edges->deleteCurr();
+                edges->prev();
+            }
         }
 
         vertices->toStart();
