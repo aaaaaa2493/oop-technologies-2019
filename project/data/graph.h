@@ -23,7 +23,9 @@ class Graph
     }
 
 public:
-    Graph() { }
+    QString graphName;
+    Graph(){ }
+    Graph(QString name) {graphName = name; }
     ~Graph() {
         delete vertices;
         delete edges;

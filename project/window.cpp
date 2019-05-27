@@ -19,12 +19,32 @@ Window::Window(QWidget *parent) :
 
     GraphDbHelper *helper = new GraphDbHelper();
 
-    graph = helper->Read();
-
     svgTree = new QSvgWidget();
 
     ui->layout->addWidget(svgTree);
     svgTree->resize(svgTree->sizeHint());
+
+
+    graphs = helper->Read();
+
+    for(auto item : *graphs)
+    {
+        auto var = item->graphName;
+        ui->GoalBox->addItem(item->graphName);
+    }
+
+
+
+    if(graphs->isEmpty())
+    {
+        graph = new Graph();
+        graphs->append(graph);
+    }
+    else
+    {
+        graph = graphs->first();
+    }
+
 
     window = new WindowAdd(this);
     connect(window, SIGNAL(VertexAdded(Vertex*)),this,SLOT(onVertexAdded(Vertex*)));
@@ -46,6 +66,8 @@ Window::~Window()
     disconnect(win, SIGNAL(VertexDeleted(Vertex*)),this,SLOT(onVertexDeleted(Vertex*)));
     disconnect(win, SIGNAL(EdgeDeleted(Edge*)),this,SLOT(onEdgeDeleted(Edge*)));
     delete win;
+
+
 
     delete ui;
     delete graph;
@@ -82,30 +104,52 @@ void Window::onGraphChanged(Graph *graph)
 
     svgTree->load((QString) "graph.svg");
     svgTree->resize(svgTree->sizeHint());
+    svgTree->resize(svgTree->sizeHint());
 }
 
 void Window::onVertexAdded(Vertex *v)
 {
+    v->graphName = graph->graphName;
     graph->addVertex(v);
     onGraphChanged(graph);
+    GraphDbHelper *helper = new GraphDbHelper();
+    helper->writeVert(v);
+    delete helper;
+
 }
 
 void Window::onEdgeAdded(Edge *e)
 {
+    e->graphName = graph->graphName;
     graph->addEdge(e);
+
     onGraphChanged(graph);
+
+    GraphDbHelper *helper = new GraphDbHelper();
+    helper->writeEdge(e);
+    delete helper;
 }
 
 void Window::onVertexDeleted(Vertex *v)
 {
+    v->graphName = graph->graphName;
+    GraphDbHelper *helper = new GraphDbHelper();
+    helper->deleteVert(graph, v);
+    delete helper;
+
     graph->removeVertex(v->displayName);
     onGraphChanged(graph);
 }
 
 void Window::onEdgeDeleted(Edge *e)
 {
+    e->graphName = graph->graphName;
+
     graph->removeEdge(e->getFrom()->displayName, e->getTo()->displayName);
     onGraphChanged(graph);
+    GraphDbHelper *helper = new GraphDbHelper();
+    helper->deleteEdge(e);
+    delete helper;
 }
 
 void Window::on_addItem_clicked()
@@ -121,4 +165,26 @@ void Window::on_addEdge_clicked()
 void Window::on_Remove_clicked()
 {
     win->show();
+}
+
+void Window::on_GoalBox_currentTextChanged(const QString &arg1)
+{
+    for(auto item : *graphs)
+    {
+        if(item->graphName == ui->GoalBox->currentText())
+           graph = item;
+    }
+    ui->ThemeBox->clear();
+    for(auto item : *graph->getVertices())
+        ui->ThemeBox->addItem(item->displayName);
+    onGraphChanged(graph);
+}
+
+void Window::on_ThemeBox_currentTextChanged(const QString &arg1)
+{
+    for(auto item : *graph->getVertices())
+    {
+        if(item->displayName == ui->ThemeBox->currentText())
+           ui->textBrowser->setText(item->content);
+    }
 }

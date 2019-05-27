@@ -14,6 +14,7 @@ class WindowAdd : public QMainWindow
 
 public:
     explicit WindowAdd(QWidget *parent = nullptr);
+
     ~WindowAdd();
 signals:
     void VertexAdded(Vertex *v);

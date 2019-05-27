@@ -10,7 +10,8 @@ class Edge
     Vertex *to;
 
 public:
-    Edge(Vertex *from, Vertex *to) : from(from), to(to) {}
+    QString graphName;
+    Edge(Vertex *from, Vertex *to, QString graph) : from(from), to(to), graphName(graph) {}
 
     Vertex *getFrom() {return from;}
     Vertex *getTo() {return to;}
