@@ -18,6 +18,7 @@ Window::Window(QWidget *parent) :
     ui(new Ui::Window)
 {
     ui->setupUi(this);
+    setWindowTitle("Visual Education");
 
     GraphDbHelper *helper = new GraphDbHelper();
 

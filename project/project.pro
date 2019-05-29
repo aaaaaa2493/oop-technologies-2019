@@ -40,7 +40,8 @@ SOURCES += \
     windowadd.cpp \
     exceptions.cpp \
     description.cpp \
-    mousezoom.cpp
+    mousezoom.cpp \
+    pool.cpp
 
 HEADERS += \
     deletewindow.h \
@@ -57,7 +58,8 @@ HEADERS += \
     windowadd.h \
     exceptions.h \
     description.h \
-    mousezoom.h
+    mousezoom.h \
+    pool.h
 
 FORMS += \
         deletewindow.ui \
