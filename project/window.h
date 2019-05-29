@@ -6,6 +6,7 @@
 #include "data/graph.h"
 #include "windowadd.h"
 #include "deletewindow.h"
+#include "graphdbhelper.h"
 
 namespace Ui {
 class Window;
@@ -30,6 +31,8 @@ private:
     WindowAdd *window;
     Graph<Elem> *graph;
     QSvgWidget *svgTree;
+
+    GraphDbHelper *helper;
 
     void onGraphChanged(Graph<Elem> *graph);
 public slots:   

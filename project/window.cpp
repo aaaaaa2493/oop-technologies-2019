@@ -9,7 +9,6 @@
 #include "data/edge.h"
 #include "data/graph.h"
 #include "windowadd.h"
-#include "graphdbhelper.h"
 
 Window::Window(QWidget *parent) :
     QMainWindow(parent),
@@ -24,7 +23,7 @@ Window::Window(QWidget *parent) :
     ui->layout->addWidget(svgTree);
     svgTree->resize(svgTree->sizeHint());
 
-
+    helper = new GraphDbHelper();
     graphs = helper->Read();
 
     for(auto item : *graphs)
@@ -32,7 +31,6 @@ Window::Window(QWidget *parent) :
         auto var = item->graphName;
         ui->GoalBox->addItem(item->graphName);
     }
-
 
 
     if(graphs->isEmpty())
@@ -59,6 +57,8 @@ Window::Window(QWidget *parent) :
 
 Window::~Window()
 {
+    delete helper;
+
     disconnect(window, SIGNAL(VertexAdded(Vertex<Elem>*)),this,SLOT(onVertexAdded(Vertex<Elem>*)));
     disconnect(window, SIGNAL(EdgeAdded(Edge<Elem>*)),this,SLOT(onEdgeAdded(Edge<Elem>*)));
     delete window;
@@ -66,8 +66,6 @@ Window::~Window()
     disconnect(win, SIGNAL(VertexDeleted(Vertex<Elem>*)),this,SLOT(onVertexDeleted(Vertex<Elem>*)));
     disconnect(win, SIGNAL(EdgeDeleted(Edge<Elem>*)),this,SLOT(onEdgeDeleted(Edge<Elem>*)));
     delete win;
-
-
 
     delete ui;
     delete graph;
@@ -112,10 +110,8 @@ void Window::onVertexAdded(Vertex<Elem> *v)
     v->value.graphName = graph->graphName;
     graph->addVertex(v);
     onGraphChanged(graph);
-    GraphDbHelper *helper = new GraphDbHelper();
-    helper->writeVert(v);
-    delete helper;
 
+    helper->writeVert(v);
 }
 
 void Window::onEdgeAdded(Edge<Elem> *e)
@@ -124,18 +120,13 @@ void Window::onEdgeAdded(Edge<Elem> *e)
     graph->addEdge(e);
 
     onGraphChanged(graph);
-
-    GraphDbHelper *helper = new GraphDbHelper();
     helper->writeEdge(e);
-    delete helper;
 }
 
 void Window::onVertexDeleted(Vertex<Elem> *v)
 {
     v->value.graphName = graph->graphName;
-    GraphDbHelper *helper = new GraphDbHelper();
     helper->deleteVert(graph, v);
-    delete helper;
 
     graph->removeVertex(v);
     onGraphChanged(graph);
@@ -147,9 +138,7 @@ void Window::onEdgeDeleted(Edge<Elem> *e)
 
     graph->removeEdge(e);
     onGraphChanged(graph);
-    GraphDbHelper *helper = new GraphDbHelper();
     helper->deleteEdge(e);
-    delete helper;
 }
 
 void Window::on_addItem_clicked()
