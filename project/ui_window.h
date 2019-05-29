@@ -45,8 +45,6 @@ public:
     QSpacerItem *verticalSpacer;
     QVBoxLayout *layout;
     QLabel *label_3;
-    QSpacerItem *verticalSpacer_2;
-    QSpacerItem *horizontalSpacer;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -124,14 +122,6 @@ public:
         label_3->setObjectName(QStringLiteral("label_3"));
 
         layout->addWidget(label_3);
-
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        layout->addItem(verticalSpacer_2);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        layout->addItem(horizontalSpacer);
 
 
         horizontalLayout->addLayout(layout);

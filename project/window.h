@@ -11,6 +11,7 @@
 #include "deletewindow.h"
 #include "graphdbhelper.h"
 #include "description.h"
+#include "mousezoom.h"
 
 namespace Ui {
 class Window;
@@ -36,6 +37,7 @@ private:
     Graph<Elem> *graph;
     QSvgWidget *svgTree;
     QGraphicsView *view;
+    MouseZoom *zoom;
 
     GraphDbHelper *helper;
 

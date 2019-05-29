@@ -27,6 +27,8 @@ Window::Window(QWidget *parent) :
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
+    zoom = new MouseZoom(view);
+    zoom->set_modifiers(Qt::NoModifier);
 
     //ui->layout->addWidget(svgTree);
     //svgTree->resize(svgTree->sizeHint());
@@ -109,14 +111,14 @@ void Window::onGraphChanged(Graph<Elem> *graph)
 
     system(command.toStdString().c_str());
 
-    svgTree->load((QString) "graph.svg");
+    //svgTree->load((QString) "graph.svg");
 
     QGraphicsScene *scene = new QGraphicsScene();
     scene->addItem(new QGraphicsSvgItem("graph.svg"));
     view->setScene(scene);
     view->show();
 
-    svgTree->resize(svgTree->sizeHint());
+    //svgTree->resize(svgTree->sizeHint());
     //svgTree->resize(svgTree->sizeHint());
 }
 

@@ -39,7 +39,8 @@ SOURCES += \
     data/pair.cpp \
     windowadd.cpp \
     exceptions.cpp \
-    description.cpp
+    description.cpp \
+    mousezoom.cpp
 
 HEADERS += \
     deletewindow.h \
@@ -55,7 +56,8 @@ HEADERS += \
     data/pair.h \
     windowadd.h \
     exceptions.h \
-    description.h
+    description.h \
+    mousezoom.h
 
 FORMS += \
         deletewindow.ui \
