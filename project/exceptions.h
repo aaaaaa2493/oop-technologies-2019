@@ -2,7 +2,7 @@
 #define EXCEPTIONS_H
 
 #include <iostream>
-#include <string>
+#include <QString>
 using namespace std;
 
 template <typename T>
@@ -11,7 +11,7 @@ class Graph;
 template <typename T>
 class GraphException {
 public:
-    const string str;
+    const QString str;
     Graph<T> *graph;
 
     friend ostream& operator<< (ostream& os, GraphException const ex) {
@@ -20,7 +20,7 @@ public:
     }
 
 protected:
-    GraphException(Graph<T> *g, string s) :
+    GraphException(Graph<T> *g, QString s) :
         graph(g),
         str("GRAPH EXCEPTION: " + s)
     {}
@@ -47,13 +47,13 @@ public:
         GraphException<T>(g, "ADD EXISTING EDGE: Edge between " + v1->toString() + " and " + v2->toString() + " already exists"),
         arg1(v1),
         arg2(v2)
-    {};
+    {}
 };
 
 template<typename T>
 class InvalidArgument : public GraphException<T> {
 protected:
-    InvalidArgument(Graph<T> *g, string str) :
+    InvalidArgument(Graph<T> *g, QString str) :
         GraphException<T>(g, "INVALID ARGUMENT: " + str)
     {}
 };
@@ -61,7 +61,7 @@ protected:
 template<typename T>
 class AddEdgeWithInvalidVertice : public InvalidArgument<T> {
 protected:
-    AddEdgeWithInvalidVertice(Graph<T> *g, string str) :
+    AddEdgeWithInvalidVertice(Graph<T> *g, QString str) :
         InvalidArgument<T>(g, "WHILE ADDING EDGE: " + str)
     {}
 };
@@ -69,7 +69,7 @@ protected:
 template<typename T>
 class AddEdgeToUnknownVertice : public AddEdgeWithInvalidVertice<T> {
 protected:
-    AddEdgeToUnknownVertice(Graph<T> *g, string str, string v1) :
+    AddEdgeToUnknownVertice(Graph<T> *g, QString str, QString v1) :
         AddEdgeWithInvalidVertice<T>(g, "UNKNOWN VERTICE: " + str + " argument is unknown vertice: " + v1)
     {}
 };
@@ -138,7 +138,7 @@ public:
 template<typename T>
 class AddEdgeToNullVertice : public AddEdgeWithInvalidVertice<T> {
 protected:
-    AddEdgeToNullVertice(Graph<T> *g, string str) :
+    AddEdgeToNullVertice(Graph<T> *g, QString str) :
         AddEdgeWithInvalidVertice<T>(g, "NULL VERTICE: " + str + " argument is null vertice")
     {}
 };

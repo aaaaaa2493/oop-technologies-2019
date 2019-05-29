@@ -3,18 +3,18 @@
 
 #include "vertex.h"
 
-
+template <typename T>
 class Edge
 {
-    Vertex *from;
-    Vertex *to;
+    Vertex<T> *from;
+    Vertex<T> *to;
 
 public:
     QString graphName;
-    Edge(Vertex *from, Vertex *to, QString graph) : from(from), to(to), graphName(graph) {}
+    Edge(Vertex<T> *from, Vertex<T> *to, QString graph) : from(from), to(to), graphName(graph) {}
 
-    Vertex *getFrom() {return from;}
-    Vertex *getTo() {return to;}
+    Vertex<T> *getFrom() {return from;}
+    Vertex<T> *getTo() {return to;}
 };
 
 #endif // EDGE_H

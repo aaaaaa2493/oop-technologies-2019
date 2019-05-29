@@ -6,17 +6,19 @@
 #include "edge.h"
 #include "queue.h"
 #include "stack.h"
+#include "exceptions.h"
 
+template <typename T>
 class Graph
 {
-    List<Vertex> *vertices = new List<Vertex>();
-    List<Edge> *edges = new List<Edge>();
+    List<Vertex<T>> *vertices = new List<Vertex<T>>();
+    List<Edge<T>> *edges = new List<Edge<T>>();
 
     void resetVertices() {
-        for (Vertex *v : *vertices) {
+        for (Vertex<T> *v : *vertices) {
             v->isVisited = false;
         }
-        for (Edge *e : *edges) {
+        for (Edge<T> *e : *edges) {
             e->getFrom()->isVisited = false;
             e->getTo()->isVisited = false;
         }
@@ -31,31 +33,31 @@ public:
         delete edges;
     }
 
-    List<Vertex> *getVertices() {
+    List<Vertex<T>> *getVertices() {
         return vertices;
     }
 
-    List<Edge> *getEdges() {
+    List<Edge<T>> *getEdges() {
         return edges;
     }
 
-    Vertex *findVertex(QString name) {
-        for (Vertex *v : *vertices) {
-            if (v->displayName == name) {
+    Vertex<T> *findVertex(QString name) {
+        for (Vertex<T> *v : *vertices) {
+            if (v->value.displayName == name) {
                 return v;
             }
         }
         return nullptr;
     }
 
-    bool containsVertex(Vertex *v) {
+    bool containsVertex(Vertex<T> *v) {
         bool isEmpty = vertices->isEmpty();
         if (isEmpty) {
             return false;
         }
 
-        for (Vertex *curr : *vertices) {
-            if (curr->displayName == v->displayName) {
+        for (Vertex<T> *curr : *vertices) {
+            if (curr->value.displayName == v->value.displayName) {
                 return true;
             }
         }
@@ -63,15 +65,15 @@ public:
         return false;
     }
 
-    bool containsEdge(Edge *e) {
+    bool containsEdge(Edge<T> *e) {
         bool isEmpty = edges->isEmpty();
         if (isEmpty) {
             return false;
         }
-        Vertex *from = e->getFrom();
-        Vertex *to = e->getTo();
+        Vertex<T> *from = e->getFrom();
+        Vertex<T> *to = e->getTo();
 
-        for (Edge *ed : *edges) {
+        for (Edge<T> *ed : *edges) {
             if (ed->getFrom() == from && ed->getTo() == to) {
                 return true;
             }
@@ -80,7 +82,7 @@ public:
         return false;
     }
 
-    void addVertex(Vertex *v) {
+    void addVertex(Vertex<T> *v) {
         if (!containsVertex(v)) {
             vertices->addBefore(v);
         }
@@ -89,11 +91,11 @@ public:
         }
     }
 
-    void addEdge(Edge *edge) {
+    void addEdge(Edge<T> *edge) {
         if (!containsEdge(edge)) {
-            edges->addAfter(new Edge(
-                findVertex(edge->getFrom()->displayName),
-                findVertex(edge->getTo()->displayName),
+            edges->addAfter(new Edge<T>(
+                findVertex(edge->getFrom()->value.displayName),
+                findVertex(edge->getTo()->value.displayName),
                 edge->graphName
             ));
         }
@@ -102,13 +104,13 @@ public:
         }
     }
 
-    void removeEdge(Edge *e) {
-        Vertex *from = e->getFrom();
-        Vertex *to = e->getTo();
+    void removeEdge(Edge<T> *e) {
+        Vertex<T> *from = e->getFrom();
+        Vertex<T> *to = e->getTo();
         bool isEnd = edges->isEmpty();
         edges->toStart();
         while (!isEnd) {
-            Edge *curr = edges->get();
+            Edge<T> *curr = edges->get();
             if (curr->getFrom() == from && curr->getTo() == to) {
                 edges->deleteCurr();
                 return;
@@ -123,8 +125,8 @@ public:
         bool isEnd = edges->isEmpty();
         edges->toStart();
         while (!isEnd) {
-            Edge *curr = edges->get();
-            if (curr->getFrom()->displayName == from && curr->getTo()->displayName == to) {
+            Edge<T> *curr = edges->get();
+            if (curr->getFrom()->value.displayName == from && curr->getTo()->value.displayName == to) {
                 edges->deleteCurr();
                 return;
             }
@@ -134,14 +136,14 @@ public:
         throw;
     }
 
-    void removeVertex(Vertex *v) {
+    void removeVertex(Vertex<T> *v) {
         if (!containsVertex(v)) {
             throw;
         }
         bool isEnd = edges->isEmpty();
         edges->toStart();
         while (!isEnd) {
-            Edge *curr = edges->get();
+            Edge<T> *curr = edges->get();
             if (curr->getFrom()->displayName == v->displayName
                     || curr->getTo()->displayName == v->displayName) {
                 edges->deleteCurr();
@@ -151,7 +153,7 @@ public:
             edges->next();
         }
         if (!edges->isEmpty()) {
-            Edge *curr = edges->get();
+            Edge<T> *curr = edges->get();
             if (curr->getFrom()->displayName == v->displayName
                     || curr->getTo()->displayName == v->displayName) {
                 edges->deleteCurr();
@@ -162,7 +164,7 @@ public:
         vertices->toStart();
         isEnd = vertices->isEmpty();
         while (!isEnd) {
-            Vertex *curr = vertices->get();
+            Vertex<T> *curr = vertices->get();
             if (curr->displayName == v->displayName) {
                 vertices->deleteCurr();
                 return;
@@ -177,8 +179,8 @@ public:
         bool isEnd = edges->isEmpty();
         edges->toStart();
         while (!isEnd) {
-            Edge *curr = edges->get();
-            if (curr->getFrom()->displayName == v || curr->getTo()->displayName == v) {
+            Edge<T> *curr = edges->get();
+            if (curr->getFrom()->value.displayName == v || curr->getTo()->value.displayName == v) {
                 edges->deleteCurr();
                 edges->prev();
             }
@@ -186,9 +188,9 @@ public:
             edges->next();
         }
         if (!edges->isEmpty()) {
-            Edge *curr = edges->get();
-            if (curr->getFrom()->displayName == v
-                    || curr->getTo()->displayName == v) {
+            Edge<T> *curr = edges->get();
+            if (curr->getFrom()->value.displayName == v
+                    || curr->getTo()->value.displayName == v) {
                 edges->deleteCurr();
                 edges->prev();
             }
@@ -197,8 +199,8 @@ public:
         vertices->toStart();
         isEnd = vertices->isEmpty();
         while (!isEnd) {
-            Vertex *curr = vertices->get();
-            if (curr->displayName == v) {
+            Vertex<T> *curr = vertices->get();
+            if (curr->value.displayName == v) {
                 vertices->deleteCurr();
                 return;
             }
@@ -209,26 +211,26 @@ public:
     }
 
 
-    List<Vertex> *BFS(Vertex *v) {
+    List<Vertex<T>> *BFS(Vertex<T> *v) {
 
         resetVertices();
 
-        Queue<Vertex> *queue = new Queue<Vertex>();
-        List<Vertex> *list = new List<Vertex>();
+        Queue<Vertex<T>> *queue = new Queue<Vertex<T>>();
+        List<Vertex<T>> *list = new List<Vertex<T>>();
 
         v->isVisited = true;
         list->addAfter(v);
         queue->push(v);
 
         while (!queue->isEmpty()) {
-             Vertex *currVertex = queue->pop();
+             Vertex<T> *currVertex = queue->pop();
 
              bool isEnd = edges->isEmpty();
              edges->toStart();
              while (!isEnd) {
-                 Edge *currEdge = edges->get();
+                 Edge<T> *currEdge = edges->get();
                  if (currEdge->getFrom() == currVertex && !currEdge->getTo()->isVisited) {
-                     Vertex *nextVertex = currEdge->getTo();
+                     Vertex<T> *nextVertex = currEdge->getTo();
                      nextVertex->isVisited = true;
                      queue->push(nextVertex);
                      list->addAfter(nextVertex);
@@ -243,17 +245,17 @@ public:
     }
 
 
-    List<Vertex> *DFS(Vertex *v) {
+    List<Vertex<T>> *DFS(Vertex<T> *v) {
 
         resetVertices();
 
-        List<Vertex> *list = new List<Vertex>();
-        Stack<Vertex> *stack = new Stack<Vertex>();
+        List<Vertex<T>> *list = new List<Vertex<T>>();
+        Stack<Vertex<T>> *stack = new Stack<Vertex<T>>();
 
         v->isVisited = true;
         list->addAfter(v);
 
-        Vertex *currVertex = v;
+        Vertex<T> *currVertex = v;
 
         while (true) {
 
@@ -262,7 +264,7 @@ public:
             bool isEnd = edges->isEmpty();
             edges->toStart();
             while (!isEnd) {
-                Edge *currEdge = edges->get();
+                Edge<T> *currEdge = edges->get();
                 if (currEdge->getFrom() == currVertex && !currEdge->getTo()->isVisited) {
                     currVertex = currEdge->getTo();
                     currVertex->isVisited = true;
@@ -290,17 +292,17 @@ public:
     }
 
 
-    List<Vertex> *getLearningOrder(Vertex *finalTopic) {
+    List<Vertex<T>> *getLearningOrder(Vertex<T> *finalTopic) {
 
         resetVertices();
-        List<Vertex> *list = new List<Vertex>();
+        List<Vertex<T>> *list = new List<Vertex<T>>();
 
-        Vertex *final = findVertex(finalTopic->displayName);
+        Vertex<T> *final = findVertex(finalTopic->displayName);
 
         list->addBefore(final);
         final->isVisited = true;
 
-        for (Edge *e : *edges) {
+        for (Edge<T> *e : *edges) {
             if (e->getTo()->displayName == final->displayName) {
                 e->getTo()->isVisited = true;
             }
@@ -313,10 +315,10 @@ public:
         while (!is_end) {
             is_end = true;
 
-            for (Edge *e : *edges) {
+            for (Edge<T> *e : *edges) {
                 if (e->getTo()->isVisited && !e->getFrom()->isVisited) {
 
-                    Vertex *curr = findVertex(e->getFrom()->displayName);
+                    Vertex<T> *curr = findVertex(e->getFrom()->displayName);
                     list->addAfter(curr);
 
                     e->getFrom()->isVisited = true;

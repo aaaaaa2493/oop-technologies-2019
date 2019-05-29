@@ -10,14 +10,14 @@ class GraphDbHelper
 {
 public:
     GraphDbHelper();
-    QList<Graph*>* Read();
+    QList<Graph<Elem>*>* Read();
 
-    void writeVert(Vertex *v);
-    void writeEdge(Edge *e);
-    void deleteEdge(Edge *e);
-    void deleteVert(Graph *g, Vertex *v);
+    void writeVert(Vertex<Elem> *v);
+    void writeEdge(Edge<Elem> *e);
+    void deleteEdge(Edge<Elem> *e);
+    void deleteVert(Graph<Elem> *g, Vertex<Elem> *v);
     void writeGraph(QString name);
-    void deleteGraph(Graph * g);
+    void deleteGraph(Graph<Elem> * g);
 };
 
 #endif // GRAPHDBHELPER_H

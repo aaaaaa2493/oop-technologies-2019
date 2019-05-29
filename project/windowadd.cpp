@@ -16,12 +16,12 @@ WindowAdd::~WindowAdd()
 void WindowAdd::on_AddVertexBut_clicked()
 {
     QString s = ui->VertexEdit->text();
-    emit VertexAdded(new Vertex(s,"",""));
+    emit VertexAdded(new Vertex<Elem>(Elem(s, "", "")));
 }
 
 void WindowAdd::on_pushButton_clicked()
 {
-    Vertex *from = new Vertex(ui->FromEdit->text(),"","");
-    Vertex *to = new Vertex(ui->ToEdit->text(),"","");
-    emit EdgeAdded(new Edge(from,to,""));
+    Vertex<Elem> *from = new Vertex<Elem>(Elem(ui->FromEdit->text(), "", ""));
+    Vertex<Elem> *to = new Vertex<Elem>(Elem(ui->ToEdit->text(), "", ""));
+    emit EdgeAdded(new Edge<Elem>(from, to, ""));
 }

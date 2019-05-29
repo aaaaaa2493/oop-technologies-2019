@@ -24,20 +24,20 @@ private:
 
     QList<QString> selectedGraphs;
 
-    QList<Graph*> *graphs;
+    QList<Graph<Elem>*> *graphs;
 
     DeleteWindow *win;
     WindowAdd *window;
-    Graph *graph;
+    Graph<Elem> *graph;
     QSvgWidget *svgTree;
 
-    void onGraphChanged(Graph *graph);
+    void onGraphChanged(Graph<Elem> *graph);
 public slots:   
-    void onVertexAdded(Vertex *v);
-    void onEdgeAdded(Edge *e);
+    void onVertexAdded(Vertex<Elem> *v);
+    void onEdgeAdded(Edge<Elem> *e);
 
-    void onVertexDeleted(Vertex *v);
-    void onEdgeDeleted(Edge *e);
+    void onVertexDeleted(Vertex<Elem> *v);
+    void onEdgeDeleted(Edge<Elem> *e);
 private slots:
     void on_addItem_clicked();
     void on_addEdge_clicked();

@@ -17,8 +17,8 @@ public:
 
     ~WindowAdd();
 signals:
-    void VertexAdded(Vertex *v);
-    void EdgeAdded(Edge *e);
+    void VertexAdded(Vertex<Elem> *v);
+    void EdgeAdded(Edge<Elem> *e);
 
 
 private slots:
