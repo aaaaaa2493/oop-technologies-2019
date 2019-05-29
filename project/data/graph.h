@@ -41,9 +41,9 @@ public:
         return edges;
     }
 
-    Vertex<T> *findVertex(QString name) {
+    Vertex<T> *findVertex(Vertex<T> *vert) {
         for (Vertex<T> *v : *vertices) {
-            if (v->value.displayName == name) {
+            if (*v == *vert) {
                 return v;
             }
         }
@@ -57,7 +57,7 @@ public:
         }
 
         for (Vertex<T> *curr : *vertices) {
-            if (curr->value.displayName == v->value.displayName) {
+            if (*curr == *v) {
                 return true;
             }
         }
@@ -74,7 +74,7 @@ public:
         Vertex<T> *to = e->getTo();
 
         for (Edge<T> *ed : *edges) {
-            if (ed->getFrom() == from && ed->getTo() == to) {
+            if (*ed->getFrom() == *from && *ed->getTo() == *to) {
                 return true;
             }
         }
@@ -94,8 +94,8 @@ public:
     void addEdge(Edge<T> *edge) {
         if (!containsEdge(edge)) {
             edges->addAfter(new Edge<T>(
-                findVertex(edge->getFrom()->value.displayName),
-                findVertex(edge->getTo()->value.displayName),
+                findVertex(edge->getFrom()),
+                findVertex(edge->getTo()),
                 edge->graphName
             ));
         }
@@ -111,22 +111,7 @@ public:
         edges->toStart();
         while (!isEnd) {
             Edge<T> *curr = edges->get();
-            if (curr->getFrom() == from && curr->getTo() == to) {
-                edges->deleteCurr();
-                return;
-            }
-            isEnd = edges->isEnd();
-            edges->next();
-        }
-        throw;
-    }
-
-    void removeEdge(QString from, QString to) {
-        bool isEnd = edges->isEmpty();
-        edges->toStart();
-        while (!isEnd) {
-            Edge<T> *curr = edges->get();
-            if (curr->getFrom()->value.displayName == from && curr->getTo()->value.displayName == to) {
+            if (*curr->getFrom() == *from && *curr->getTo() == *to) {
                 edges->deleteCurr();
                 return;
             }
@@ -144,8 +129,7 @@ public:
         edges->toStart();
         while (!isEnd) {
             Edge<T> *curr = edges->get();
-            if (curr->getFrom()->displayName == v->displayName
-                    || curr->getTo()->displayName == v->displayName) {
+            if (*curr->getFrom() == *v || *curr->getTo() == *v) {
                 edges->deleteCurr();
                 edges->prev();
             }
@@ -154,8 +138,7 @@ public:
         }
         if (!edges->isEmpty()) {
             Edge<T> *curr = edges->get();
-            if (curr->getFrom()->displayName == v->displayName
-                    || curr->getTo()->displayName == v->displayName) {
+            if (*curr->getFrom() == *v || *curr->getTo() == *v) {
                 edges->deleteCurr();
                 edges->prev();
             }
@@ -165,7 +148,7 @@ public:
         isEnd = vertices->isEmpty();
         while (!isEnd) {
             Vertex<T> *curr = vertices->get();
-            if (curr->displayName == v->displayName) {
+            if (*curr == *v) {
                 vertices->deleteCurr();
                 return;
             }
@@ -174,42 +157,6 @@ public:
         }
         throw;
     }
-
-    void removeVertex(QString v) {
-        bool isEnd = edges->isEmpty();
-        edges->toStart();
-        while (!isEnd) {
-            Edge<T> *curr = edges->get();
-            if (curr->getFrom()->value.displayName == v || curr->getTo()->value.displayName == v) {
-                edges->deleteCurr();
-                edges->prev();
-            }
-            isEnd = edges->isEnd();
-            edges->next();
-        }
-        if (!edges->isEmpty()) {
-            Edge<T> *curr = edges->get();
-            if (curr->getFrom()->value.displayName == v
-                    || curr->getTo()->value.displayName == v) {
-                edges->deleteCurr();
-                edges->prev();
-            }
-        }
-
-        vertices->toStart();
-        isEnd = vertices->isEmpty();
-        while (!isEnd) {
-            Vertex<T> *curr = vertices->get();
-            if (curr->value.displayName == v) {
-                vertices->deleteCurr();
-                return;
-            }
-            isEnd = vertices->isEnd();
-            vertices->next();
-        }
-        throw;
-    }
-
 
     List<Vertex<T>> *BFS(Vertex<T> *v) {
 
@@ -297,16 +244,16 @@ public:
         resetVertices();
         List<Vertex<T>> *list = new List<Vertex<T>>();
 
-        Vertex<T> *final = findVertex(finalTopic->displayName);
+        Vertex<T> *final = findVertex(finalTopic);
 
         list->addBefore(final);
         final->isVisited = true;
 
         for (Edge<T> *e : *edges) {
-            if (e->getTo()->displayName == final->displayName) {
+            if (e->getTo() == final) {
                 e->getTo()->isVisited = true;
             }
-            if (e->getFrom()->displayName == final->displayName) {
+            if (e->getFrom() == final) {
                 e->getFrom()->isVisited = true;
             }
         }
@@ -318,7 +265,7 @@ public:
             for (Edge<T> *e : *edges) {
                 if (e->getTo()->isVisited && !e->getFrom()->isVisited) {
 
-                    Vertex<T> *curr = findVertex(e->getFrom()->displayName);
+                    Vertex<T> *curr = findVertex(e->getFrom());
                     list->addAfter(curr);
 
                     e->getFrom()->isVisited = true;
