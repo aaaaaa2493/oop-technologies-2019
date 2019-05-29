@@ -2,7 +2,6 @@
 #define WINDOW_H
 
 #include <QMainWindow>
-#include <QSvgWidget>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QListWidgetItem>
@@ -35,7 +34,6 @@ private:
     DeleteWindow *win;
     WindowAdd *window;
     Graph<Elem> *graph;
-    QSvgWidget *svgTree;
     QGraphicsView *view;
     MouseZoom *zoom;
 

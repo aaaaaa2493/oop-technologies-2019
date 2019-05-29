@@ -45,7 +45,7 @@
         <item>
          <widget class="QPushButton" name="findWay">
           <property name="text">
-           <string>Find way?</string>
+           <string>Find way</string>
           </property>
          </widget>
         </item>

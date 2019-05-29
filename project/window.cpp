@@ -2,7 +2,6 @@
 #include "ui_window.h"
 #include <QFile>
 #include <QTextStream>
-#include <QSvgWidget>
 #include <QGraphicsScene>
 #include <QGraphicsSvgItem>
 #include <QGraphicsView>
@@ -22,7 +21,6 @@ Window::Window(QWidget *parent) :
 
     GraphDbHelper *helper = new GraphDbHelper();
 
-    svgTree = new QSvgWidget();
     view = new QGraphicsView();
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -30,8 +28,6 @@ Window::Window(QWidget *parent) :
     zoom = new MouseZoom(view);
     zoom->set_modifiers(Qt::NoModifier);
 
-    //ui->layout->addWidget(svgTree);
-    //svgTree->resize(svgTree->sizeHint());
     ui->layout->addWidget(view);
 
     helper = new GraphDbHelper();
@@ -111,15 +107,10 @@ void Window::onGraphChanged(Graph<Elem> *graph)
 
     system(command.toStdString().c_str());
 
-    //svgTree->load((QString) "graph.svg");
-
     QGraphicsScene *scene = new QGraphicsScene();
     scene->addItem(new QGraphicsSvgItem("graph.svg"));
     view->setScene(scene);
     view->show();
-
-    //svgTree->resize(svgTree->sizeHint());
-    //svgTree->resize(svgTree->sizeHint());
 }
 
 void Window::onVertexAdded(Vertex<Elem> *v)

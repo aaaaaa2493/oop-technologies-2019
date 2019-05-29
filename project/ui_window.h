@@ -151,7 +151,7 @@ public:
         Window->setWindowTitle(QApplication::translate("Window", "Window", nullptr));
         label_2->setText(QApplication::translate("Window", "Selected theme", nullptr));
         label->setText(QApplication::translate("Window", "Selected goal", nullptr));
-        findWay->setText(QApplication::translate("Window", "Find way?", nullptr));
+        findWay->setText(QApplication::translate("Window", "Find way", nullptr));
         Remove->setText(QApplication::translate("Window", "Remove", nullptr));
         addItem->setText(QApplication::translate("Window", "Add", nullptr));
         label_3->setText(QApplication::translate("Window", "Goal scheme", nullptr));
