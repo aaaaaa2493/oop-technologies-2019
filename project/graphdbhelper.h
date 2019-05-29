@@ -8,8 +8,14 @@
 
 class GraphDbHelper
 {
+    QSqlDatabase sdb;
+
 public:
     GraphDbHelper();
+    ~GraphDbHelper() {
+        sdb.close();
+    }
+
     QList<Graph<Elem>*>* Read();
 
     void writeVert(Vertex<Elem> *v);

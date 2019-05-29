@@ -4,18 +4,18 @@
 
 GraphDbHelper::GraphDbHelper()
 {
-
-}
-
-QList<Graph<Elem>*>* GraphDbHelper::Read()
-{
-    QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
+    sdb = QSqlDatabase::addDatabase("QSQLITE");
     sdb.setDatabaseName("graph.db");
 
     if (!sdb.open())
     {
            qDebug() << sdb.lastError().text();
     }
+}
+
+QList<Graph<Elem>*>* GraphDbHelper::Read()
+{
+
     QList<Graph<Elem>*>* g = new QList<Graph<Elem>*>();
     QSqlQuery queryGraph;
     queryGraph.exec("SELECT * FROM Graphs");
@@ -53,20 +53,12 @@ QList<Graph<Elem>*>* GraphDbHelper::Read()
                     var->addEdge(new Edge<Elem>(fromv, tov, graphName));
              }
     }
-    sdb.close();
+
     return g;
 }
 
 void GraphDbHelper::writeVert(Vertex<Elem> *v)
 {
-    QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
-    sdb.setDatabaseName("graph.db");
-
-    if (!sdb.open())
-    {
-           qDebug() << sdb.lastError().text();
-    }
-
     QSqlQuery vertQuery;
     auto f = v->value.graphName;
     vertQuery.prepare(
@@ -75,19 +67,10 @@ void GraphDbHelper::writeVert(Vertex<Elem> *v)
     vertQuery.bindValue(":GraphName", v->value.graphName);
     vertQuery.bindValue(":Description", v->value.graphName);
     qDebug() << vertQuery.exec() << endl;
-    sdb.close();
 }
 
 void GraphDbHelper::writeEdge(Edge<Elem> *e)
 {
-    QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
-    sdb.setDatabaseName("graph.db");
-
-    if (!sdb.open())
-    {
-           qDebug() << sdb.lastError().text();
-    }
-
     QSqlQuery edgeQuery;
     auto f = e->graphName;
     edgeQuery.prepare(
@@ -96,19 +79,10 @@ void GraphDbHelper::writeEdge(Edge<Elem> *e)
     edgeQuery.bindValue(":ToEdge", e->getTo()->value.displayName);
     edgeQuery.bindValue(":GraphName",e->graphName);
     qDebug() << edgeQuery.exec() << endl;
-    sdb.close();
 }
 
 void GraphDbHelper::deleteVert(Graph<Elem> *g, Vertex<Elem> *v)
 {
-    QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
-    sdb.setDatabaseName("graph.db");
-
-    if (!sdb.open())
-    {
-           qDebug() << sdb.lastError().text();
-    }
-
     QSqlQuery query;
 
     query.prepare("DELETE FROM Vertices WHERE Name='" + v->value.displayName +
@@ -136,21 +110,11 @@ void GraphDbHelper::deleteVert(Graph<Elem> *g, Vertex<Elem> *v)
             qDebug() << query.exec();
         }
     }
-
-    sdb.close();
 }
 
 
 void GraphDbHelper::deleteEdge(Edge<Elem> *e)
 {
-    QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
-    sdb.setDatabaseName("graph.db");
-
-    if (!sdb.open())
-    {
-           qDebug() << sdb.lastError().text();
-    }
-
     QSqlQuery query;
 
     auto a = e->getFrom()->value.displayName;
@@ -161,9 +125,6 @@ void GraphDbHelper::deleteEdge(Edge<Elem> *e)
                   "' AND ToEdge='" + e->getTo()->value.displayName +
                   "' AND GraphName='" + e->graphName +"';");
     qDebug() << query.exec();
-
-    sdb.close();
-
 }
 
 
