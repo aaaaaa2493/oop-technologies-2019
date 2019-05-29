@@ -1,6 +1,8 @@
 #ifndef PAIR_H
 #define PAIR_H
 
+namespace data {
+
 template<typename A, typename B>
 class Pair
 {
@@ -10,5 +12,7 @@ public:
 
     Pair(A fst, B snd) : fst(fst), snd(snd) {}
 };
+
+}
 
 #endif // PAIR_H

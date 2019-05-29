@@ -3,6 +3,8 @@
 
 #include "node.h"
 
+namespace data {
+
 template<typename T>
 class Stack
 {
@@ -45,5 +47,7 @@ public:
     }
 
 };
+
+}
 
 #endif // STACK_H

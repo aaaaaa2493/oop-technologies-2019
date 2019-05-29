@@ -3,6 +3,8 @@
 
 #include "vertex.h"
 
+namespace data {
+
 template <typename T>
 class Edge
 {
@@ -16,5 +18,7 @@ public:
     Vertex<T> *getFrom() {return from;}
     Vertex<T> *getTo() {return to;}
 };
+
+}
 
 #endif // EDGE_H

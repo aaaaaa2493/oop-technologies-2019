@@ -8,6 +8,8 @@
 #include "stack.h"
 #include "exceptions.h"
 
+namespace data {
+
 template <typename T>
 class Graph
 {
@@ -315,5 +317,7 @@ public:
     }
 
 };
+
+}
 
 #endif // GRAPH_H

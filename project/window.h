@@ -29,23 +29,23 @@ private:
 
     QList<QString> selectedGraphs;
 
-    QList<Graph<Elem>*> *graphs;
+    QList<data::Graph<Elem>*> *graphs;
 
     DeleteWindow *win;
     WindowAdd *window;
-    Graph<Elem> *graph;
+    data::Graph<Elem> *graph;
     QGraphicsView *view;
     MouseZoom *zoom;
 
     GraphDbHelper *helper;
 
-    void onGraphChanged(Graph<Elem> *graph);
+    void onGraphChanged(data::Graph<Elem> *graph);
 public slots:   
-    void onVertexAdded(Vertex<Elem> *v);
-    void onEdgeAdded(Edge<Elem> *e);
+    void onVertexAdded(data::Vertex<Elem> *v);
+    void onEdgeAdded(data::Edge<Elem> *e);
 
-    void onVertexDeleted(Vertex<Elem> *v);
-    void onEdgeDeleted(Edge<Elem> *e);
+    void onVertexDeleted(data::Vertex<Elem> *v);
+    void onEdgeDeleted(data::Edge<Elem> *e);
 private slots:
     void on_addItem_clicked();
     void on_addEdge_clicked();

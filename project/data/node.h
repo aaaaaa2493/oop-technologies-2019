@@ -1,6 +1,8 @@
 #ifndef NODE_H
 #define NODE_H
 
+namespace data {
+
 template<typename T>
 class Node {
 public:
@@ -13,5 +15,7 @@ public:
     Node<T> *next;
     Node<T> *prev;
 };
+
+}
 
 #endif // NODE_H

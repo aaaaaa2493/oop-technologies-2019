@@ -13,15 +13,15 @@ GraphDbHelper::GraphDbHelper()
     }
 }
 
-QList<Graph<Elem>*>* GraphDbHelper::Read()
+QList<data::Graph<Elem>*>* GraphDbHelper::Read()
 {
 
-    QList<Graph<Elem>*>* g = new QList<Graph<Elem>*>();
+    QList<data::Graph<Elem>*>* g = new QList<data::Graph<Elem>*>();
     QSqlQuery queryGraph;
     queryGraph.exec("SELECT * FROM Graphs");
     while (queryGraph.next()) {
         QString name = queryGraph.value(0).toString();
-        g->push_back(new Graph<Elem>(name));
+        g->push_back(new data::Graph<Elem>(name));
     }
 
     QSqlQuery queryVert;
@@ -32,10 +32,10 @@ QList<Graph<Elem>*>* GraphDbHelper::Read()
         QString name = rec.value(1).toString();
         QString display = rec.value(0).toString();
         QString cont = rec.value(2).toString();
-        for(Graph<Elem>* var : *g)
+        for(data::Graph<Elem>* var : *g)
         {
             if(var->graphName == name)
-                var->addVertex(new Vertex<Elem>(Elem(display, name, cont)));
+                var->addVertex(data::Vertex<Elem>::create(Elem(display, name, cont)));
         }
     }
 
@@ -45,19 +45,19 @@ QList<Graph<Elem>*>* GraphDbHelper::Read()
         QString from = queryEdge.value(0).toString();
         QString to = queryEdge.value(1).toString();
         QString graphName = queryEdge.value(2).toString();
-        Vertex<Elem> *fromv = new Vertex<Elem>(Elem(from, "", ""));
-        Vertex<Elem> *tov = new Vertex<Elem>(Elem(to, "", ""));
-        for(Graph<Elem>* var : *g)
+        data::Vertex<Elem> *fromv = data::Vertex<Elem>::create(Elem(from, "", ""));
+        data::Vertex<Elem> *tov = data::Vertex<Elem>::create(Elem(to, "", ""));
+        for(data::Graph<Elem>* var : *g)
         {
             if(var->graphName == graphName)
-                var->addEdge(new Edge<Elem>(fromv, tov, graphName));
+                var->addEdge(new data::Edge<Elem>(fromv, tov, graphName));
         }
     }
 
     return g;
 }
 
-void GraphDbHelper::writeVert(Vertex<Elem> *v)
+void GraphDbHelper::writeVert(data::Vertex<Elem> *v)
 {
     QSqlQuery vertQuery;
     auto f = v->value.graphName;
@@ -69,7 +69,7 @@ void GraphDbHelper::writeVert(Vertex<Elem> *v)
     qDebug() << vertQuery.exec() << endl;
 }
 
-void GraphDbHelper::updateVert(Vertex<Elem> *v)
+void GraphDbHelper::updateVert(data::Vertex<Elem> *v)
 {
     QSqlQuery vertQuery;
     vertQuery.prepare(
@@ -81,7 +81,7 @@ void GraphDbHelper::updateVert(Vertex<Elem> *v)
     qDebug() << vertQuery.exec() << endl;
 }
 
-void GraphDbHelper::writeEdge(Edge<Elem> *e)
+void GraphDbHelper::writeEdge(data::Edge<Elem> *e)
 {
     QSqlQuery edgeQuery;
     auto f = e->graphName;
@@ -93,7 +93,7 @@ void GraphDbHelper::writeEdge(Edge<Elem> *e)
     qDebug() << edgeQuery.exec() << endl;
 }
 
-void GraphDbHelper::deleteVert(Graph<Elem> *g, Vertex<Elem> *v)
+void GraphDbHelper::deleteVert(data::Graph<Elem> *g, data::Vertex<Elem> *v)
 {
     QSqlQuery query;
 
@@ -125,7 +125,7 @@ void GraphDbHelper::deleteVert(Graph<Elem> *g, Vertex<Elem> *v)
 }
 
 
-void GraphDbHelper::deleteEdge(Edge<Elem> *e)
+void GraphDbHelper::deleteEdge(data::Edge<Elem> *e)
 {
     QSqlQuery query;
 

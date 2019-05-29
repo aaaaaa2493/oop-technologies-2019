@@ -43,7 +43,7 @@ Window::Window(QWidget *parent) :
 
     if(graphs->isEmpty())
     {
-        graph = new Graph<Elem>();
+        graph = new data::Graph<Elem>();
         graphs->append(graph);
     }
     else
@@ -53,12 +53,12 @@ Window::Window(QWidget *parent) :
 
 
     window = new WindowAdd(this);
-    connect(window, SIGNAL(VertexAdded(Vertex<Elem>*)),this,SLOT(onVertexAdded(Vertex<Elem>*)));
-    connect(window, SIGNAL(EdgeAdded(Edge<Elem>*)),this,SLOT(onEdgeAdded(Edge<Elem>*)));
+    connect(window, SIGNAL(VertexAdded(data::Vertex<Elem>*)),this,SLOT(onVertexAdded(data::Vertex<Elem>*)));
+    connect(window, SIGNAL(EdgeAdded(data::Edge<Elem>*)),this,SLOT(onEdgeAdded(data::Edge<Elem>*)));
 
     win = new DeleteWindow(this);
-    connect(win, SIGNAL(VertexDeleted(Vertex<Elem>*)),this,SLOT(onVertexDeleted(Vertex<Elem>*)));
-    connect(win, SIGNAL(EdgeDeleted(Edge<Elem>*)),this,SLOT(onEdgeDeleted(Edge<Elem>*)));
+    connect(win, SIGNAL(VertexDeleted(data::Vertex<Elem>*)),this,SLOT(onVertexDeleted(data::Vertex<Elem>*)));
+    connect(win, SIGNAL(EdgeDeleted(data::Edge<Elem>*)),this,SLOT(onEdgeDeleted(data::Edge<Elem>*)));
 
     onGraphChanged(graph);
 }
@@ -67,19 +67,19 @@ Window::~Window()
 {
     delete helper;
 
-    disconnect(window, SIGNAL(VertexAdded(Vertex<Elem>*)),this,SLOT(onVertexAdded(Vertex<Elem>*)));
-    disconnect(window, SIGNAL(EdgeAdded(Edge<Elem>*)),this,SLOT(onEdgeAdded(Edge<Elem>*)));
+    disconnect(window, SIGNAL(VertexAdded(data::Vertex<Elem>*)),this,SLOT(onVertexAdded(data::Vertex<Elem>*)));
+    disconnect(window, SIGNAL(EdgeAdded(data::Edge<Elem>*)),this,SLOT(onEdgeAdded(data::Edge<Elem>*)));
     delete window;
 
-    disconnect(win, SIGNAL(VertexDeleted(Vertex<Elem>*)),this,SLOT(onVertexDeleted(Vertex<Elem>*)));
-    disconnect(win, SIGNAL(EdgeDeleted(Edge<Elem>*)),this,SLOT(onEdgeDeleted(Edge<Elem>*)));
+    disconnect(win, SIGNAL(VertexDeleted(data::Vertex<Elem>*)),this,SLOT(onVertexDeleted(data::Vertex<Elem>*)));
+    disconnect(win, SIGNAL(EdgeDeleted(data::Edge<Elem>*)),this,SLOT(onEdgeDeleted(data::Edge<Elem>*)));
     delete win;
 
     delete ui;
     delete graph;
 }
 
-void Window::onGraphChanged(Graph<Elem> *graph)
+void Window::onGraphChanged(data::Graph<Elem> *graph)
 {
     QFile file("graph.dot");
 
@@ -87,15 +87,15 @@ void Window::onGraphChanged(Graph<Elem> *graph)
         QTextStream stream( &file );
         stream << "digraph {\n";
 
-        List<Vertex<Elem>> *vertices = graph->getVertices();
-        for (Vertex<Elem> *v : *vertices) {
+        data::List<data::Vertex<Elem>> *vertices = graph->getVertices();
+        for (data::Vertex<Elem> *v : *vertices) {
             stream << " \"" << v->value.displayName << "\";\n";
         }
 
-        List<Edge<Elem>> *edges = graph->getEdges();
-        for (Edge<Elem> *e : *edges) {
-            Vertex<Elem> *from = e->getFrom();
-            Vertex<Elem> *to = e->getTo();
+        data::List<data::Edge<Elem>> *edges = graph->getEdges();
+        for (data::Edge<Elem> *e : *edges) {
+            data::Vertex<Elem> *from = e->getFrom();
+            data::Vertex<Elem> *to = e->getTo();
             stream << " \"" << from->value.displayName << "\" -> \"" << to->value.displayName << "\";\n";
         }
 
@@ -114,7 +114,7 @@ void Window::onGraphChanged(Graph<Elem> *graph)
     view->show();
 }
 
-void Window::onVertexAdded(Vertex<Elem> *v)
+void Window::onVertexAdded(data::Vertex<Elem> *v)
 {
     v->value.graphName = graph->graphName;
     graph->addVertex(v);
@@ -123,7 +123,7 @@ void Window::onVertexAdded(Vertex<Elem> *v)
     helper->writeVert(v);
 }
 
-void Window::onEdgeAdded(Edge<Elem> *e)
+void Window::onEdgeAdded(data::Edge<Elem> *e)
 {
     e->graphName = graph->graphName;
     graph->addEdge(e);
@@ -132,7 +132,7 @@ void Window::onEdgeAdded(Edge<Elem> *e)
     helper->writeEdge(e);
 }
 
-void Window::onVertexDeleted(Vertex<Elem> *v)
+void Window::onVertexDeleted(data::Vertex<Elem> *v)
 {
     v->value.graphName = graph->graphName;
     helper->deleteVert(graph, v);
@@ -141,7 +141,7 @@ void Window::onVertexDeleted(Vertex<Elem> *v)
     onGraphChanged(graph);
 }
 
-void Window::onEdgeDeleted(Edge<Elem> *e)
+void Window::onEdgeDeleted(data::Edge<Elem> *e)
 {
     e->graphName = graph->graphName;
 
@@ -184,12 +184,12 @@ void Window::on_ThemeBox_currentTextChanged(const QString &arg1)
 void Window::on_findWay_clicked()
 {
     QString topicName = ui->ThemeBox->currentText();
-    Vertex<Elem> *v = new Vertex<Elem>(Elem(topicName, "", ""));
-    List<Vertex<Elem>> * list = graph->getLearningOrder(v);
+    data::Vertex<Elem> *v = data::Vertex<Elem>::create(Elem(topicName, "", ""));
+    data::List<data::Vertex<Elem>> * list = graph->getLearningOrder(v);
 
     ui->list->reset();
 
-    for (Vertex<Elem> * e : *list)
+    for (data::Vertex<Elem> * e : *list)
     {
         ui->list->addItem(e->value.displayName);
     }
@@ -198,8 +198,8 @@ void Window::on_findWay_clicked()
 void Window::on_list_itemDoubleClicked(QListWidgetItem *item)
 {
     QString topicName = item->text();
-    Vertex<Elem> *v = new Vertex<Elem>(Elem(topicName, "", ""));
-    Vertex<Elem> *actualV = graph->findVertex(v);
+    data::Vertex<Elem> *v = data::Vertex<Elem>::create(Elem(topicName, "", ""));
+    data::Vertex<Elem> *actualV = graph->findVertex(v);
 
     (new Description(topicName, actualV->value.content))->show();
 }

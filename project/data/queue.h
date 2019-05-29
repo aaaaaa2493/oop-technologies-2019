@@ -3,6 +3,8 @@
 
 #include "node.h"
 
+namespace data {
+
 template<typename T>
 class Queue
 {
@@ -52,5 +54,7 @@ public:
     }
 
 };
+
+}
 
 #endif // QUEUE_H

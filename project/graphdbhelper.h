@@ -16,15 +16,15 @@ public:
         sdb.close();
     }
 
-    QList<Graph<Elem>*>* Read();
+    QList<data::Graph<Elem>*>* Read();
 
-    void writeVert(Vertex<Elem> *v);
-    void updateVert(Vertex<Elem> *v);
-    void writeEdge(Edge<Elem> *e);
-    void deleteEdge(Edge<Elem> *e);
-    void deleteVert(Graph<Elem> *g, Vertex<Elem> *v);
+    void writeVert(data::Vertex<Elem> *v);
+    void updateVert(data::Vertex<Elem> *v);
+    void writeEdge(data::Edge<Elem> *e);
+    void deleteEdge(data::Edge<Elem> *e);
+    void deleteVert(data::Graph<Elem> *g, data::Vertex<Elem> *v);
     void writeGraph(QString name);
-    void deleteGraph(Graph<Elem> * g);
+    void deleteGraph(data::Graph<Elem> * g);
 };
 
 #endif // GRAPHDBHELPER_H

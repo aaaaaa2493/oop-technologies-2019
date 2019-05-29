@@ -5,6 +5,8 @@
 #include <QString>
 using namespace std;
 
+namespace data {
+
 template <typename T>
 class Graph;
 
@@ -181,4 +183,7 @@ public:
         arg1(e)
     {}
 };
+
+}
+
 #endif // EXCEPTIONS_H

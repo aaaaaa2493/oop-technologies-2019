@@ -17,8 +17,8 @@ public:
     ~DeleteWindow();
 
 signals:
-    void VertexDeleted(Vertex<Elem> *v);
-    void EdgeDeleted(Edge<Elem> *e);
+    void VertexDeleted(data::Vertex<Elem> *v);
+    void EdgeDeleted(data::Edge<Elem> *e);
 
 
 private slots:

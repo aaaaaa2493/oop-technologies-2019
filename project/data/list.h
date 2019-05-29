@@ -3,6 +3,8 @@
 
 #include "node.h"
 
+namespace data {
+
 template<typename T>
 class ListIterator;
 
@@ -303,4 +305,7 @@ public:
 private:
     Node<T> *curr;
 };
+
+}
+
 #endif // LIST_H
