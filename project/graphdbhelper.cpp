@@ -20,8 +20,8 @@ QList<Graph<Elem>*>* GraphDbHelper::Read()
     QSqlQuery queryGraph;
     queryGraph.exec("SELECT * FROM Graphs");
     while (queryGraph.next()) {
-             QString name = queryGraph.value(0).toString();
-             g->push_back(new Graph<Elem>(name));
+        QString name = queryGraph.value(0).toString();
+        g->push_back(new Graph<Elem>(name));
     }
 
     QSqlQuery queryVert;
@@ -29,29 +29,29 @@ QList<Graph<Elem>*>* GraphDbHelper::Read()
     while (queryVert.next())
     {
         QSqlRecord rec = queryVert.record();
-             QString name = rec.value(1).toString();
-             QString display = rec.value(0).toString();
-             QString cont = rec.value(2).toString();
-             for(Graph<Elem>* var : *g)
-             {
-                if(var->graphName == name)
-                    var->addVertex(new Vertex<Elem>(Elem(display, name, cont)));
-             }
+        QString name = rec.value(1).toString();
+        QString display = rec.value(0).toString();
+        QString cont = rec.value(2).toString();
+        for(Graph<Elem>* var : *g)
+        {
+            if(var->graphName == name)
+                var->addVertex(new Vertex<Elem>(Elem(display, name, cont)));
+        }
     }
 
     QSqlQuery queryEdge;
     queryEdge.exec("SELECT * FROM Edges");
     while (queryEdge.next()) {
-             QString from = queryEdge.value(0).toString();
-             QString to = queryEdge.value(1).toString();
-             QString graphName = queryEdge.value(2).toString();
-             Vertex<Elem> *fromv = new Vertex<Elem>(Elem(from, "", ""));
-             Vertex<Elem> *tov = new Vertex<Elem>(Elem(to, "", ""));
-             for(Graph<Elem>* var : *g)
-             {
-                if(var->graphName == graphName)
-                    var->addEdge(new Edge<Elem>(fromv, tov, graphName));
-             }
+        QString from = queryEdge.value(0).toString();
+        QString to = queryEdge.value(1).toString();
+        QString graphName = queryEdge.value(2).toString();
+        Vertex<Elem> *fromv = new Vertex<Elem>(Elem(from, "", ""));
+        Vertex<Elem> *tov = new Vertex<Elem>(Elem(to, "", ""));
+        for(Graph<Elem>* var : *g)
+        {
+            if(var->graphName == graphName)
+                var->addEdge(new Edge<Elem>(fromv, tov, graphName));
+        }
     }
 
     return g;
@@ -65,7 +65,19 @@ void GraphDbHelper::writeVert(Vertex<Elem> *v)
               QString("INSERT INTO Vertices(Name,GraphName,Description) values(:Name,:GraphName,:Description);"));
     vertQuery.bindValue(":Name", v->value.displayName);
     vertQuery.bindValue(":GraphName", v->value.graphName);
-    vertQuery.bindValue(":Description", v->value.graphName);
+    vertQuery.bindValue(":Description", v->value.content);
+    qDebug() << vertQuery.exec() << endl;
+}
+
+void GraphDbHelper::updateVert(Vertex<Elem> *v)
+{
+    QSqlQuery vertQuery;
+    vertQuery.prepare(
+              QString("UPDATE Vertices SET Description = :desc "
+                      "WHERE Name = :vertex and GraphName = :graphName;"));
+    vertQuery.bindValue(":desc", v->value.content);
+    vertQuery.bindValue(":vertex", v->value.displayName);
+    vertQuery.bindValue(":graphName", v->value.graphName);
     qDebug() << vertQuery.exec() << endl;
 }
 

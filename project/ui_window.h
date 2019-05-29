@@ -21,7 +21,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -48,9 +47,6 @@ public:
     QLabel *label_3;
     QSpacerItem *verticalSpacer_2;
     QSpacerItem *horizontalSpacer;
-    QVBoxLayout *verticalLayout_3;
-    QLabel *label_4;
-    QTextBrowser *textBrowser;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -140,22 +136,6 @@ public:
 
         horizontalLayout->addLayout(layout);
 
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        label_4 = new QLabel(centralWidget);
-        label_4->setObjectName(QStringLiteral("label_4"));
-
-        verticalLayout_3->addWidget(label_4);
-
-        textBrowser = new QTextBrowser(centralWidget);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
-
-        verticalLayout_3->addWidget(textBrowser);
-
-
-        horizontalLayout->addLayout(verticalLayout_3);
-
 
         gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
 
@@ -185,7 +165,6 @@ public:
         Remove->setText(QApplication::translate("Window", "Remove", nullptr));
         addItem->setText(QApplication::translate("Window", "Add", nullptr));
         label_3->setText(QApplication::translate("Window", "Goal scheme", nullptr));
-        label_4->setText(QApplication::translate("Window", "Selected theme description", nullptr));
     } // retranslateUi
 
 };

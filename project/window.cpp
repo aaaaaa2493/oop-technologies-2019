@@ -24,6 +24,8 @@ Window::Window(QWidget *parent) :
 
     svgTree = new QSvgWidget();
     view = new QGraphicsView();
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
 
     //ui->layout->addWidget(svgTree);
@@ -183,13 +185,7 @@ void Window::on_GoalBox_currentTextChanged(const QString &arg1)
 }
 
 void Window::on_ThemeBox_currentTextChanged(const QString &arg1)
-{
-    for(auto item : *graph->getVertices())
-    {
-        if(item->value.displayName == ui->ThemeBox->currentText())
-           ui->textBrowser->setText(item->value.content);
-    }
-}
+{ }
 
 void Window::on_findWay_clicked()
 {
@@ -203,4 +199,13 @@ void Window::on_findWay_clicked()
     {
         ui->list->addItem(e->value.displayName);
     }
+}
+
+void Window::on_list_itemDoubleClicked(QListWidgetItem *item)
+{
+    QString topicName = item->text();
+    Vertex<Elem> *v = new Vertex<Elem>(Elem(topicName, "", ""));
+    Vertex<Elem> *actualV = graph->findVertex(v);
+
+    (new Description(topicName, actualV->value.content))->show();
 }

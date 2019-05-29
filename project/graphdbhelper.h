@@ -19,6 +19,7 @@ public:
     QList<Graph<Elem>*>* Read();
 
     void writeVert(Vertex<Elem> *v);
+    void updateVert(Vertex<Elem> *v);
     void writeEdge(Edge<Elem> *e);
     void deleteEdge(Edge<Elem> *e);
     void deleteVert(Graph<Elem> *g, Vertex<Elem> *v);

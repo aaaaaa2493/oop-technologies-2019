@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'deletewindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.2
+** Created by: Qt User Interface Compiler version 5.11.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -40,44 +40,44 @@ public:
     void setupUi(QMainWindow *DeleteWindow)
     {
         if (DeleteWindow->objectName().isEmpty())
-            DeleteWindow->setObjectName(QString::fromUtf8("DeleteWindow"));
+            DeleteWindow->setObjectName(QStringLiteral("DeleteWindow"));
         DeleteWindow->resize(240, 423);
         centralwidget = new QWidget(DeleteWindow);
-        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        centralwidget->setObjectName(QStringLiteral("centralwidget"));
         label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(10, 40, 111, 16));
         VertexEdit = new QLineEdit(centralwidget);
-        VertexEdit->setObjectName(QString::fromUtf8("VertexEdit"));
+        VertexEdit->setObjectName(QStringLiteral("VertexEdit"));
         VertexEdit->setGeometry(QRect(10, 60, 113, 20));
         VertexDel = new QPushButton(centralwidget);
-        VertexDel->setObjectName(QString::fromUtf8("VertexDel"));
+        VertexDel->setObjectName(QStringLiteral("VertexDel"));
         VertexDel->setGeometry(QRect(10, 90, 81, 23));
         label_2 = new QLabel(centralwidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(20, 160, 101, 16));
         label_3 = new QLabel(centralwidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setGeometry(QRect(20, 200, 47, 13));
         FromEdit = new QLineEdit(centralwidget);
-        FromEdit->setObjectName(QString::fromUtf8("FromEdit"));
+        FromEdit->setObjectName(QStringLiteral("FromEdit"));
         FromEdit->setGeometry(QRect(20, 220, 113, 20));
         label_4 = new QLabel(centralwidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setGeometry(QRect(20, 250, 47, 13));
         ToEdit = new QLineEdit(centralwidget);
-        ToEdit->setObjectName(QString::fromUtf8("ToEdit"));
+        ToEdit->setObjectName(QStringLiteral("ToEdit"));
         ToEdit->setGeometry(QRect(20, 270, 113, 20));
         EdgeDel = new QPushButton(centralwidget);
-        EdgeDel->setObjectName(QString::fromUtf8("EdgeDel"));
+        EdgeDel->setObjectName(QStringLiteral("EdgeDel"));
         EdgeDel->setGeometry(QRect(20, 290, 75, 23));
         DeleteWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(DeleteWindow);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
+        menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setGeometry(QRect(0, 0, 240, 21));
         DeleteWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(DeleteWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        statusbar->setObjectName(QStringLiteral("statusbar"));
         DeleteWindow->setStatusBar(statusbar);
 
         retranslateUi(DeleteWindow);

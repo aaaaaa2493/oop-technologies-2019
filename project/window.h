@@ -5,10 +5,12 @@
 #include <QSvgWidget>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QListWidgetItem>
 #include "data/graph.h"
 #include "windowadd.h"
 #include "deletewindow.h"
 #include "graphdbhelper.h"
+#include "description.h"
 
 namespace Ui {
 class Window;
@@ -51,6 +53,7 @@ private slots:
     void on_GoalBox_currentTextChanged(const QString &arg1);
     void on_ThemeBox_currentTextChanged(const QString &arg1);
     void on_findWay_clicked();
+    void on_list_itemDoubleClicked(QListWidgetItem *item);
 };
 
 #endif // WINDOW_H

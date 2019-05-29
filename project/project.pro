@@ -38,7 +38,8 @@ SOURCES += \
     data/stack.cpp \
     data/pair.cpp \
     windowadd.cpp \
-    exceptions.cpp
+    exceptions.cpp \
+    description.cpp
 
 HEADERS += \
     deletewindow.h \
@@ -53,7 +54,8 @@ HEADERS += \
     data/stack.h \
     data/pair.h \
     windowadd.h \
-    exceptions.h
+    exceptions.h \
+    description.h
 
 FORMS += \
         deletewindow.ui \

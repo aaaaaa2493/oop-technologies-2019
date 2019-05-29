@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'windowadd.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.2
+** Created by: Qt User Interface Compiler version 5.11.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -40,44 +40,44 @@ public:
     void setupUi(QMainWindow *WindowAdd)
     {
         if (WindowAdd->objectName().isEmpty())
-            WindowAdd->setObjectName(QString::fromUtf8("WindowAdd"));
+            WindowAdd->setObjectName(QStringLiteral("WindowAdd"));
         WindowAdd->resize(278, 367);
         centralwidget = new QWidget(WindowAdd);
-        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        centralwidget->setObjectName(QStringLiteral("centralwidget"));
         label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(10, 20, 141, 16));
         VertexEdit = new QLineEdit(centralwidget);
-        VertexEdit->setObjectName(QString::fromUtf8("VertexEdit"));
+        VertexEdit->setObjectName(QStringLiteral("VertexEdit"));
         VertexEdit->setGeometry(QRect(10, 40, 211, 20));
         AddVertexBut = new QPushButton(centralwidget);
-        AddVertexBut->setObjectName(QString::fromUtf8("AddVertexBut"));
+        AddVertexBut->setObjectName(QStringLiteral("AddVertexBut"));
         AddVertexBut->setGeometry(QRect(10, 70, 75, 23));
         label_2 = new QLabel(centralwidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(10, 160, 141, 16));
         label_3 = new QLabel(centralwidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setGeometry(QRect(10, 180, 47, 13));
         label_4 = new QLabel(centralwidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setGeometry(QRect(10, 230, 47, 13));
         FromEdit = new QLineEdit(centralwidget);
-        FromEdit->setObjectName(QString::fromUtf8("FromEdit"));
+        FromEdit->setObjectName(QStringLiteral("FromEdit"));
         FromEdit->setGeometry(QRect(10, 200, 211, 20));
         ToEdit = new QLineEdit(centralwidget);
-        ToEdit->setObjectName(QString::fromUtf8("ToEdit"));
+        ToEdit->setObjectName(QStringLiteral("ToEdit"));
         ToEdit->setGeometry(QRect(10, 250, 211, 20));
         pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(10, 280, 75, 23));
         WindowAdd->setCentralWidget(centralwidget);
         menubar = new QMenuBar(WindowAdd);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
+        menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setGeometry(QRect(0, 0, 278, 21));
         WindowAdd->setMenuBar(menubar);
         statusbar = new QStatusBar(WindowAdd);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        statusbar->setObjectName(QStringLiteral("statusbar"));
         WindowAdd->setStatusBar(statusbar);
 
         retranslateUi(WindowAdd);
