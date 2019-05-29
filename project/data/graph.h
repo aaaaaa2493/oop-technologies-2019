@@ -83,24 +83,57 @@ public:
     }
 
     void addVertex(Vertex<T> *v) {
+        if (v == nullptr) {
+            throw AddNullVertice<T>(this, v);
+        }
         if (!containsVertex(v)) {
             vertices->addBefore(v);
         }
         else {
-            throw;
+            throw AddExistingVertex<T>(this, v);
         }
     }
 
     void addEdge(Edge<T> *edge) {
+        if (edge == nullptr) {
+            throw AddNullEdge<T>(this, edge);
+        }
+
+        Vertex<T> *fromV = edge->getFrom();
+        Vertex<T> *toV = edge->getTo();
+
+        if (fromV == nullptr && toV == nullptr) {
+            throw AddEdgeWithBothNullVertices<T>(this, edge);
+        }
+        else if (fromV == nullptr) {
+            throw AddEdgeWithFirstNullVertice<T>(this, edge);
+        }
+        else if (toV == nullptr) {
+            throw AddEdgeWithSecondNullVertice<T>(this, edge);
+        }
+
+        bool from = containsVertex(edge->getFrom());
+        bool to = containsVertex(edge->getTo());
+
+        if (!from && !to) {
+            throw AddEdgeWithBothUnknownVertices<T>(this, edge);
+        }
+        else if (!from) {
+            throw AddEdgeWithFirstUnknownVertice<T>(this, edge);
+        }
+        else if (!to) {
+            throw AddEdgeWithSecondUnknownVertice<T>(this, edge);
+        }
+
         if (!containsEdge(edge)) {
             edges->addAfter(new Edge<T>(
-                findVertex(edge->getFrom()),
-                findVertex(edge->getTo()),
+                findVertex(fromV),
+                findVertex(toV),
                 edge->graphName
             ));
         }
         else {
-            throw;
+            throw AddExistingEdge<T>(this, edge);
         }
     }
 

@@ -9,6 +9,12 @@ template <typename T>
 class Graph;
 
 template <typename T>
+class Vertex;
+
+template <typename T>
+class Edge;
+
+template <typename T>
 class GraphException {
 public:
     const QString str;
@@ -29,10 +35,12 @@ protected:
 template<typename T>
 class AddExistingVertex : public GraphException<T> {
 public:
-    void (Graph<T>::*func)(T * vertex) = &Graph<T>::addVertex;
-    T *arg1;
-    AddExistingVertex(Graph<T> *g, T *vertex) :
-        GraphException<T>(g, "ADD EXISTING VERTEX: Can not add already existing vertex: " + vertex->toString()),
+    void (Graph<T>::*func)(Vertex<T> * vertex) = &Graph<T>::addVertex;
+    Vertex<T> *arg1;
+    AddExistingVertex(Graph<T> *g, Vertex<T> *vertex) :
+        GraphException<T>(g, "ADD EXISTING VERTEX: "
+                             "Can not add already existing vertex: " +
+                          vertex->value.str()),
         arg1(vertex)
     {}
 };
@@ -40,13 +48,14 @@ public:
 template<typename T>
 class AddExistingEdge : public GraphException<T> {
 public:
-    void (Graph<T>::*func)(T *v1, T *v2) = &Graph<T>::addEdge;
-    T *arg1;
-    T *arg2;
-    AddExistingEdge(Graph<T> *g, T *v1, T *v2) :
-        GraphException<T>(g, "ADD EXISTING EDGE: Edge between " + v1->toString() + " and " + v2->toString() + " already exists"),
-        arg1(v1),
-        arg2(v2)
+    void (Graph<T>::*func)(Edge<T> *e) = &Graph<T>::addEdge;
+    Edge<T> *arg1;
+    AddExistingEdge(Graph<T> *g, Edge<T> *e) :
+        GraphException<T>(g, "ADD EXISTING EDGE: "
+                             "Edge between " +
+                          e->getFrom()->value.str() + " and " +
+                          e->getTo()->value.str() + " already exists"),
+        arg1(e)
     {}
 };
 
@@ -55,6 +64,28 @@ class InvalidArgument : public GraphException<T> {
 protected:
     InvalidArgument(Graph<T> *g, QString str) :
         GraphException<T>(g, "INVALID ARGUMENT: " + str)
+    {}
+};
+
+template<typename T>
+class AddNullVertice : public InvalidArgument<T> {
+public:
+    void (Graph<T>::*func)(Vertex<T> * vertex) = &Graph<T>::addVertex;
+    Vertex<T> *arg1;
+    AddNullVertice(Graph<T> *g, Vertex<T> *vertex) :
+        InvalidArgument<T>(g, "NULL VERTICE: trying to add null vertice"),
+        arg1(vertex)
+    {}
+};
+
+template<typename T>
+class AddNullEdge : public InvalidArgument<T> {
+public:
+    void (Graph<T>::*func)(Edge<T> *e) = &Graph<T>::addEdge;
+    Edge<T> *arg1;
+    AddNullEdge(Graph<T> *g, Edge<T> *e) :
+        InvalidArgument<T>(g, "NULL EDGE: trying to add null edge"),
+        arg1(e)
     {}
 };
 
@@ -77,61 +108,36 @@ protected:
 template<typename T>
 class AddEdgeWithFirstUnknownVertice : public AddEdgeToUnknownVertice<T> {
 public:
-    void (Graph<T>::*func)(T *v1, T *v2) = &Graph<T>::addEdge;
-    T *arg1;
-    T *arg2;
-    AddEdgeWithFirstUnknownVertice(Graph<T> *g, T *v1, T *v2) :
-        AddEdgeToUnknownVertice<T>(g, "First", v1->toString()),
-        arg1(v1),
-        arg2(v2)
+    void (Graph<T>::*func)(Edge<T> *e) = &Graph<T>::addEdge;
+    Edge<T> *arg1;
+    AddEdgeWithFirstUnknownVertice(Graph<T> *g, Edge<T> *e) :
+        AddEdgeToUnknownVertice<T>(g, "First", e->getFrom()->value.str()),
+        arg1(e)
     {}
 };
 
 template<typename T>
 class AddEdgeWithSecondUnknownVertice : public AddEdgeToUnknownVertice<T> {
 public:
-    void (Graph<T>::*func)(T *v1, T *v2) = &Graph<T>::addEdge;
-    T *arg1;
-    T *arg2;
-    AddEdgeWithSecondUnknownVertice(Graph<T> *g, T *v1, T *v2) :
-        AddEdgeToUnknownVertice<T>(g, "Second", v2->toString()),
-        arg1(v1),
-        arg2(v2)
+    void (Graph<T>::*func)(Edge<T> *e) = &Graph<T>::addEdge;
+    Edge<T> *arg1;
+    AddEdgeWithSecondUnknownVertice(Graph<T> *g, Edge<T> *e) :
+        AddEdgeToUnknownVertice<T>(g, "Second", e->getTo()->value.str()),
+        arg1(e)
     {}
 };
 
 template<typename T>
 class AddEdgeWithBothUnknownVertices : public AddEdgeToUnknownVertice<T> {
 public:
-    void (Graph<T>::*func)(T *v1, T *v2) = &Graph<T>::addEdge;
-    T *arg1;
-    T *arg2;
-    AddEdgeWithBothUnknownVertices(Graph<T> *g, T *v1, T *v2) :
-        AddEdgeToUnknownVertice<T>(g, "Both first and second", v1->toString() + " and " + v2->toString()),
-        arg1(v1),
-        arg2(v2)
-    {}
-};
-
-template<typename T>
-class AddNullVertice : public InvalidArgument<T> {
-public:
-    void (Graph<T>::*func)(T *vertex) = &Graph<T>::addVertex;
-    T *arg1;
-    AddNullVertice(Graph<T> *g, T *v1) :
-        InvalidArgument<T>(g, "NULL VERTICE: trying to add null vertice"),
-        arg1(v1)
-    {}
-};
-
-template<typename T>
-class AddNullEdge : public InvalidArgument<T> {
-public:
-    void (Graph<T>::*func)(T *vertex) = &Graph<T>::addVertex;
-    T *arg1;
-    AddNullEdge(Graph<T> *g, T *v1) :
-        InvalidArgument<T>(g, "NULL EDGE: trying to add null edge"),
-        arg1(v1)
+    void (Graph<T>::*func)(Edge<T> *e) = &Graph<T>::addEdge;
+    Edge<T> *arg1;
+    AddEdgeWithBothUnknownVertices(Graph<T> *g, Edge<T> *e) :
+        AddEdgeToUnknownVertice<T>(g, "Both first and second",
+                                   e->getFrom()->value.str() +
+                                   " and " +
+                                   e->getTo()->value.str()),
+        arg1(e)
     {}
 };
 
@@ -146,39 +152,33 @@ protected:
 template<typename T>
 class AddEdgeWithFirstNullVertice : public AddEdgeToNullVertice<T> {
 public:
-    void (Graph<T>::*func)(T *v1, T *v2) = &Graph<T>::addEdge;
-    T *arg1;
-    T *arg2;
-    AddEdgeWithFirstNullVertice(Graph<T> *g, T *v1, T *v2) :
+    void (Graph<T>::*func)(Edge<T> *e) = &Graph<T>::addEdge;
+    Edge<T> *arg1;
+    AddEdgeWithFirstNullVertice(Graph<T> *g, Edge<T> *e) :
         AddEdgeToNullVertice<T>(g, "First"),
-        arg1(v1),
-        arg2(v2)
+        arg1(e)
     {}
 };
 
 template<typename T>
 class AddEdgeWithSecondNullVertice : public AddEdgeToNullVertice<T> {
 public:
-    void (Graph<T>::*func)(T *v1, T *v2) = &Graph<T>::addEdge;
-    T *arg1;
-    T *arg2;
-    AddEdgeWithSecondNullVertice(Graph<T> *g, T *v1, T *v2) :
+    void (Graph<T>::*func)(Edge<T> *e) = &Graph<T>::addEdge;
+    Edge<T> *arg1;
+    AddEdgeWithSecondNullVertice(Graph<T> *g, Edge<T> *e) :
         AddEdgeToNullVertice<T>(g, "Second"),
-        arg1(v1),
-        arg2(v2)
+        arg1(e)
     {}
 };
 
 template<typename T>
 class AddEdgeWithBothNullVertices : public AddEdgeToNullVertice<T> {
 public:
-    void (Graph<T>::*func)(T *v1, T *v2) = &Graph<T>::addEdge;
-    T *arg1;
-    T *arg2;
-    AddEdgeWithBothNullVertices(Graph<T> *g, T *v1, T *v2) :
+    void (Graph<T>::*func)(Edge<T> *e) = &Graph<T>::addEdge;
+    Edge<T> *arg1;
+    AddEdgeWithBothNullVertices(Graph<T> *g, Edge<T> *e) :
         AddEdgeToNullVertice<T>(g, "Both first and second"),
-        arg1(v1),
-        arg2(v2)
+        arg1(e)
     {}
 };
 #endif // EXCEPTIONS_H
