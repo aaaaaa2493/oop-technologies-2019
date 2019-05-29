@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'window.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.2
+** Created by: Qt User Interface Compiler version 5.11.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,10 +12,14 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QToolBar>
@@ -28,18 +32,25 @@ class Ui_Window
 {
 public:
     QWidget *centralWidget;
-    QPushButton *Remove;
-    QPushButton *addItem;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *layout;
+    QGridLayout *gridLayout;
+    QHBoxLayout *horizontalLayout;
+    QVBoxLayout *verticalLayout;
+    QLabel *label_2;
     QComboBox *GoalBox;
     QLabel *label;
-    QLabel *label_2;
     QComboBox *ThemeBox;
+    QPushButton *findWay;
+    QPushButton *Remove;
+    QPushButton *addItem;
+    QListWidget *list;
+    QSpacerItem *verticalSpacer;
+    QVBoxLayout *layout;
     QLabel *label_3;
-    QTextBrowser *textBrowser;
+    QSpacerItem *verticalSpacer_2;
+    QSpacerItem *horizontalSpacer;
+    QVBoxLayout *verticalLayout_3;
     QLabel *label_4;
-    QPushButton *pushButton;
+    QTextBrowser *textBrowser;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -47,59 +58,117 @@ public:
     void setupUi(QMainWindow *Window)
     {
         if (Window->objectName().isEmpty())
-            Window->setObjectName(QString::fromUtf8("Window"));
-        Window->resize(1005, 496);
+            Window->setObjectName(QStringLiteral("Window"));
+        Window->resize(1173, 717);
+        Window->setAutoFillBackground(true);
         centralWidget = new QWidget(Window);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        Remove = new QPushButton(centralWidget);
-        Remove->setObjectName(QString::fromUtf8("Remove"));
-        Remove->setGeometry(QRect(10, 400, 80, 25));
-        addItem = new QPushButton(centralWidget);
-        addItem->setObjectName(QString::fromUtf8("addItem"));
-        addItem->setGeometry(QRect(10, 370, 80, 25));
-        verticalLayoutWidget = new QWidget(centralWidget);
-        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(140, 30, 571, 391));
-        layout = new QVBoxLayout(verticalLayoutWidget);
-        layout->setSpacing(6);
-        layout->setContentsMargins(11, 11, 11, 11);
-        layout->setObjectName(QString::fromUtf8("layout"));
-        layout->setSizeConstraint(QLayout::SetNoConstraint);
-        layout->setContentsMargins(0, 0, 0, 0);
-        GoalBox = new QComboBox(centralWidget);
-        GoalBox->setObjectName(QString::fromUtf8("GoalBox"));
-        GoalBox->setGeometry(QRect(10, 130, 121, 22));
-        label = new QLabel(centralWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(10, 110, 121, 16));
+        centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        gridLayout = new QGridLayout(centralWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(6);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(10, 160, 81, 16));
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        verticalLayout->addWidget(label_2);
+
+        GoalBox = new QComboBox(centralWidget);
+        GoalBox->setObjectName(QStringLiteral("GoalBox"));
+
+        verticalLayout->addWidget(GoalBox);
+
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+
+        verticalLayout->addWidget(label);
+
         ThemeBox = new QComboBox(centralWidget);
-        ThemeBox->setObjectName(QString::fromUtf8("ThemeBox"));
-        ThemeBox->setGeometry(QRect(10, 180, 121, 22));
+        ThemeBox->setObjectName(QStringLiteral("ThemeBox"));
+
+        verticalLayout->addWidget(ThemeBox);
+
+        findWay = new QPushButton(centralWidget);
+        findWay->setObjectName(QStringLiteral("findWay"));
+
+        verticalLayout->addWidget(findWay);
+
+        Remove = new QPushButton(centralWidget);
+        Remove->setObjectName(QStringLiteral("Remove"));
+
+        verticalLayout->addWidget(Remove);
+
+        addItem = new QPushButton(centralWidget);
+        addItem->setObjectName(QStringLiteral("addItem"));
+
+        verticalLayout->addWidget(addItem);
+
+        list = new QListWidget(centralWidget);
+        list->setObjectName(QStringLiteral("list"));
+
+        verticalLayout->addWidget(list);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
+
+
+        horizontalLayout->addLayout(verticalLayout);
+
+        layout = new QVBoxLayout();
+        layout->setSpacing(6);
+        layout->setObjectName(QStringLiteral("layout"));
+        layout->setSizeConstraint(QLayout::SetNoConstraint);
         label_3 = new QLabel(centralWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(140, 10, 71, 16));
-        textBrowser = new QTextBrowser(centralWidget);
-        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
-        textBrowser->setGeometry(QRect(730, 30, 256, 391));
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        layout->addWidget(label_3);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        layout->addItem(verticalSpacer_2);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        layout->addItem(horizontalSpacer);
+
+
+        horizontalLayout->addLayout(layout);
+
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         label_4 = new QLabel(centralWidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(730, 10, 141, 16));
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(10, 270, 81, 23));
+        label_4->setObjectName(QStringLiteral("label_4"));
+
+        verticalLayout_3->addWidget(label_4);
+
+        textBrowser = new QTextBrowser(centralWidget);
+        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+
+        verticalLayout_3->addWidget(textBrowser);
+
+
+        horizontalLayout->addLayout(verticalLayout_3);
+
+
+        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
+
         Window->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Window);
-        menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1005, 21));
+        menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 1173, 25));
         Window->setMenuBar(menuBar);
         mainToolBar = new QToolBar(Window);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
+        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         Window->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(Window);
-        statusBar->setObjectName(QString::fromUtf8("statusBar"));
+        statusBar->setObjectName(QStringLiteral("statusBar"));
         Window->setStatusBar(statusBar);
 
         retranslateUi(Window);
@@ -110,13 +179,13 @@ public:
     void retranslateUi(QMainWindow *Window)
     {
         Window->setWindowTitle(QApplication::translate("Window", "Window", nullptr));
+        label_2->setText(QApplication::translate("Window", "Selected theme", nullptr));
+        label->setText(QApplication::translate("Window", "Selected goal", nullptr));
+        findWay->setText(QApplication::translate("Window", "Find way?", nullptr));
         Remove->setText(QApplication::translate("Window", "Remove", nullptr));
         addItem->setText(QApplication::translate("Window", "Add", nullptr));
-        label->setText(QApplication::translate("Window", "Selected goal", nullptr));
-        label_2->setText(QApplication::translate("Window", "Selected theme", nullptr));
         label_3->setText(QApplication::translate("Window", "Goal scheme", nullptr));
         label_4->setText(QApplication::translate("Window", "Selected theme description", nullptr));
-        pushButton->setText(QApplication::translate("Window", "Find way?", nullptr));
     } // retranslateUi
 
 };

@@ -279,7 +279,7 @@ public:
 
         Vertex<T> *final = findVertex(finalTopic);
 
-        list->addBefore(final);
+        list->prepend(final);
         final->isVisited = true;
 
         for (Edge<T> *e : *edges) {
@@ -299,7 +299,7 @@ public:
                 if (e->getTo()->isVisited && !e->getFrom()->isVisited) {
 
                     Vertex<T> *curr = findVertex(e->getFrom());
-                    list->addAfter(curr);
+                    list->prepend(curr);
 
                     e->getFrom()->isVisited = true;
                     curr->isVisited = true;

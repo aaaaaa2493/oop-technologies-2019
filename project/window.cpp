@@ -3,7 +3,11 @@
 #include <QFile>
 #include <QTextStream>
 #include <QSvgWidget>
+#include <QGraphicsScene>
+#include <QGraphicsSvgItem>
+#include <QGraphicsView>
 #include <QBoxLayout>
+#include <QListView>
 #include "data/list.h"
 #include "data/vertex.h"
 #include "data/edge.h"
@@ -19,9 +23,12 @@ Window::Window(QWidget *parent) :
     GraphDbHelper *helper = new GraphDbHelper();
 
     svgTree = new QSvgWidget();
+    view = new QGraphicsView();
+    view->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
 
-    ui->layout->addWidget(svgTree);
-    svgTree->resize(svgTree->sizeHint());
+    //ui->layout->addWidget(svgTree);
+    //svgTree->resize(svgTree->sizeHint());
+    ui->layout->addWidget(view);
 
     helper = new GraphDbHelper();
     graphs = helper->Read();
@@ -101,8 +108,14 @@ void Window::onGraphChanged(Graph<Elem> *graph)
     system(command.toStdString().c_str());
 
     svgTree->load((QString) "graph.svg");
+
+    QGraphicsScene *scene = new QGraphicsScene();
+    scene->addItem(new QGraphicsSvgItem("graph.svg"));
+    view->setScene(scene);
+    view->show();
+
     svgTree->resize(svgTree->sizeHint());
-    svgTree->resize(svgTree->sizeHint());
+    //svgTree->resize(svgTree->sizeHint());
 }
 
 void Window::onVertexAdded(Vertex<Elem> *v)
@@ -175,5 +188,19 @@ void Window::on_ThemeBox_currentTextChanged(const QString &arg1)
     {
         if(item->value.displayName == ui->ThemeBox->currentText())
            ui->textBrowser->setText(item->value.content);
+    }
+}
+
+void Window::on_findWay_clicked()
+{
+    QString topicName = ui->ThemeBox->currentText();
+    Vertex<Elem> *v = new Vertex<Elem>(Elem(topicName, "", ""));
+    List<Vertex<Elem>> * list = graph->getLearningOrder(v);
+
+    ui->list->reset();
+
+    for (Vertex<Elem> * e : *list)
+    {
+        ui->list->addItem(e->value.displayName);
     }
 }

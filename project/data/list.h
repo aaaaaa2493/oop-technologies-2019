@@ -84,6 +84,30 @@ public:
         return this;
     }
 
+    List *append(T *value) {
+        Node<T> *node = new Node<T>(value);
+        if (curr == nullptr) {
+            curr = first = last = node;
+        }
+        else {
+            last->next = node;
+            node->prev = last;
+            last = node;
+        }
+    }
+
+    List *prepend(T *value) {
+        Node<T> *node = new Node<T>(value);
+        if (curr == nullptr) {
+            curr = first = last = node;
+        }
+        else {
+            first->prev = node;
+            node->next = first;
+            first = node;
+        }
+    }
+
     // APPROVED
 
     // ... node1 -> node2 -> curr ...

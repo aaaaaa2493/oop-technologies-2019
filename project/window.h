@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QSvgWidget>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include "data/graph.h"
 #include "windowadd.h"
 #include "deletewindow.h"
@@ -31,6 +33,7 @@ private:
     WindowAdd *window;
     Graph<Elem> *graph;
     QSvgWidget *svgTree;
+    QGraphicsView *view;
 
     GraphDbHelper *helper;
 
@@ -47,6 +50,7 @@ private slots:
     void on_Remove_clicked();
     void on_GoalBox_currentTextChanged(const QString &arg1);
     void on_ThemeBox_currentTextChanged(const QString &arg1);
+    void on_findWay_clicked();
 };
 
 #endif // WINDOW_H

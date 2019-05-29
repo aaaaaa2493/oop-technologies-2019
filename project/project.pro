@@ -58,7 +58,8 @@ HEADERS += \
 FORMS += \
         deletewindow.ui \
         window.ui \
-        windowadd.ui
+        windowadd.ui \
+    description.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
